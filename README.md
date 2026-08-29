@@ -1,65 +1,109 @@
-# Kamu Kurumları Başarı Belgeleri — Web Demo
+# Kurumsal Yazılım Çözümleri — Proje Vitrini ve Başarı Belgeleri Web
 
-Bu depo, masaüstünde tamamlanan **Kamu Kurumları Başarı Belgeleri Düzenleme ve Takip Sistemi'nin orijinal `app.py` sürümünü** web demosunda doğrudan çalıştırır.
+Bu depo artık yalnız tek bir Başarı Belgeleri landing page'i değildir. Web giriş ekranı, geliştirilen **birden fazla kurumsal yazılım projesini tanıtan genel proje vitrini** olarak tasarlanmıştır.
 
-## Temel ilke
+## SABİT ANA MİMARİ
 
-Web demosu için Başarı Belgeleri sistemi yeniden yazılmamıştır ve sadeleştirilmiş bir taklit arayüz kullanılmaz.
+Bu karar geri alınmayacaktır:
 
-- `app.py` → orijinal ve tam Başarı Belgeleri sistemi
-- `web_auth.py` → tanıtım sayfası, üyelik, giriş, demo limiti ve kullanıcı çalışma alanı
-- `web_app.py` → web giriş noktası; `BASARI_WEB_MODE=1` ile doğrudan orijinal `app.py`yi açar
+**Genel Proje Vitrini → Proje Kartı / Proje Detayı → Demo veya Üye Girişi → İlgili Gerçek Uygulama**
 
-Kullanıcı akışı:
+Başarı Belgeleri sistemi, ana vitrindeki projelerden yalnızca biridir.
 
-**Tanıtım → Demoyu Dene → Üyelik → Orijinal Başarı Belgeleri Sistemi**
+Ana vitrin hiçbir geliştirmede tekrar yalnız Başarı Belgeleri tanıtımına çevrilmemelidir. Ayrıntılı sabit karar:
 
-Üye giriş yaptıktan sonra gördüğü kayıt, fotoğraf, imza, Excel aktarımı, Taslak, Olur, toplu işlemler, kesinleştirme, tarih/sayı, PDF, Üstün Başarı dayanakları, arşiv, sistem ayarları ve yedekleme ekranları `app.py`deki gerçek sistemdir.
+`docs/PORTFOLIO_ARCHITECTURE_LOCK.md`
+
+Derleme sistemi de bu kuralı teknik olarak kontrol eder.
+
+## Vitrindeki başlangıç projeleri
+
+- **Kamu Kurumları Başarı Belgeleri Düzenleme ve Takip Sistemi** — aktif web demo
+- **Havaalanı Geçiş İzin Yönetim Sistemi (HGİYS)** — portföyde, demo daha sonra
+- **İstanbul Havalimanı Hanut Takip Sistemi** — portföyde, demo daha sonra
+- Yeni projeler — mevcut grid bozulmadan yeni kart olarak eklenir
+
+## Bugünkü yayın mimarisi
+
+Şu anda hedeflenen ücretsiz/geçiş dönemi mimarisi:
+
+**Google Sites → genel tanıtım/portal → Google Apps Script web uygulaması → Google Sheets / Google Drive**
+
+Apps Script geliştirme kaynakları:
+
+`apps-script/`
+
+Google Apps Script'e aktarılacak otomatik hazırlanmış paket:
+
+`apps-script-deploy/`
+
+Bu klasörde temel olarak:
+
+- `Code.gs`
+- `Index.html`
+- `appsscript.json`
+
+bulunur.
+
+`tools/build_apps_script_deploy.py`, kaynak dosyalardan dağıtım paketini otomatik üretir.
+
+## Portföy vitrini nasıl sabitleniyor?
+
+Ana vitrin iki kaynak dosyada tutulur:
+
+- `apps-script/PortfolioLanding.html`
+- `apps-script/PortfolioStyles.html`
+
+Derleme sırasında bu içerik zorunlu olarak dağıtım `Index.html`ine yerleştirilir.
+
+Eski tek-ürün Başarı Belgeleri landing metni tekrar dağıtıma girerse derleme hata verir. Böylece uygulama içindeki düzeltmeler ana vitrini geriye döndüremez.
+
+## Başarı Belgeleri sistemi
+
+Başarı Belgeleri web demosu masaüstündeki gerçek iş kurallarını temel alır. Amaç temsili bir demo değil, gerçek özellikleri çalışan web sürümüdür.
+
+Ana bölümler:
+
+1. Ana Sayfa
+2. Yeni Belge Kaydı
+3. Excel’den Yeni Toplu Kayıt Ekle
+4. Taslak Kayıtlar
+5. Olur Listesindeki Kayıtlar
+6. Belge Arşivi
+7. Toplu İşlemler
+8. Sistem Ayarları
+9. Yedekleme ve Dışa Aktarım
+
+Temel belge akışı:
+
+**TASLAK → OLUR LİSTESİNDE → PDF HAZIRLA / TARİH-SAYI → İMZALANDI VE TESLİM EDİLDİ**
+
+Üstün Başarı tarafında geçerli Başarı Belgeleri dayanak ilişkileri, fotoğraf/imza, Excel, toplu işlemler, arşiv ve PDF şablonları korunur.
 
 ## Demo üyeliği
 
-Yeni kullanıcı varsayılan olarak:
+Yeni demo kullanıcıları varsayılan olarak:
 
 - 7 gün
 - 10 yeni kayıt
 
-ile `TRIAL` hesabı açar. Demo sınırı yalnız üyelik/kullanım sınırıdır; program özellikleri temsili ekranlara dönüştürülmez.
+hakkıyla açılır.
 
-Yönetici üyeyi `TRIAL`, `FULL` veya `BLOCKED` yapabilir ve kayıt limitini değiştirebilir.
+Demo limiti yalnız kullanım sınırıdır; özellikler temsili ekranlara dönüştürülmez.
 
-## Kullanıcı verileri
+## Açılış / oturum davranışı
 
-Her üyeye ayrı çalışma klasörü açılır. Orijinal uygulamanın SQLite veritabanı, fotoğrafları, imzaları, belgeleri, şablonları ve yedekleri bu kullanıcı alanında tutulur; kullanıcı verileri birbirine karışmaz.
+Apps Script sürümünde açılış çağrılarının ekranı sonsuza kadar kilitlememesi, sekmeye geri dönüldüğünde görünümün toparlanması ve kullanıcı çıkışında Ctrl+F5 gerekmemesi hedeflenen zorunlu davranıştır.
 
-Kalıcı bir sunucuda `/data` dizini kalıcı disk/volume olarak bağlanmalıdır.
+Bu davranış `ClientLifecycle.html` katmanında tutulur; vitrin tasarımıyla karıştırılmamalıdır.
 
-## Çalıştırma
+## Daha sonra normal hosta geçiş
 
-Gerekli Python paketleri `requirements.txt` içindedir.
+Uzun vadede normal hosta geçildiğinde backend PHP/MySQL veya seçilecek başka bir sunucu teknolojisine taşınabilir.
 
-Web demosunun giriş dosyası:
+Ancak şu iki şey değişmez:
 
-`web_app.py`
+1. Ana ürün mimarisi: **genel proje vitrini → proje → demo/üyelik → uygulama**
+2. Başarı Belgeleri iş kuralları ve gerçek ekran/işlem kapsamı
 
-Çalıştırma komutu:
-
-`streamlit run web_app.py`
-
-İsteğe bağlı ortam değişkenleri:
-
-- `WEB_DATA_ROOT` — kalıcı veri dizini; varsayılan `/data`
-- `WEB_TRIAL_DAYS` — varsayılan `7`
-- `WEB_TRIAL_RECORD_LIMIT` — varsayılan `10`
-- `WEB_SESSION_DAYS` — oturum süresi; varsayılan `7`
-- `WEB_ADMIN_EMAIL` — ilk yönetici e-postası
-- `WEB_ADMIN_PASSWORD` — ilk yönetici parolası
-
-## Google Sites
-
-Google Sites tanıtım/portal katmanı olarak kullanılabilir. Gerçek program Python/Streamlit çalıştırabildiği bir web adresinde yayınlanır; bu adres Google Sites'e bağlantı veya uygun olduğunda gömme yoluyla eklenebilir.
-
-Google Apps Script ile hazırlanmış eski sadeleştirilmiş prototip kaldırılmıştır; çünkü orijinal sistemi birebir göstermiyordu.
-
-## Durum
-
-Repo tarafındaki doğru mimari hazırdır. İnternete açık gerçek kullanım için sonraki adım, `web_app.py`yi **kalıcı `/data` alanı bulunan bir Python/Streamlit sunucusunda** yayınlamaktır.
+Bugünden tablo ve servis mantığı mümkün olduğunca bu taşınabilirliğe göre ayrılmaktadır.
