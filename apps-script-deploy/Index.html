@@ -473,7 +473,6 @@ setTimeout(()=>{try{if(TOKEN)api('syncLegacyDocumentSettingsWeb',TOKEN)}catch(e)
 <script>
 (function(){
   let booting=false;
-  let lastVisibleAt=Date.now();
 
   function ensureLoadingBox(){
     if(document.getElementById('appLoadingOverlay')) return;
@@ -490,6 +489,28 @@ setTimeout(()=>{try{if(TOKEN)api('syncLegacyDocumentSettingsWeb',TOKEN)}catch(e)
     if(text) d.firstElementChild.textContent=text;
     d.classList.toggle('hidden',!on);
   }
+  function timeout(p,ms,label){
+    return Promise.race([
+      p,
+      new Promise((_,rej)=>setTimeout(()=>rej(new Error(label||'İstek zaman aşımına uğradı.')),ms))
+    ]);
+  }
+  function showHomeNow(){
+    document.querySelectorAll('.page').forEach(x=>x.classList.add('hidden'));
+    const home=$('page-home'); if(home) home.classList.remove('hidden');
+    document.querySelectorAll('.menu button').forEach(x=>x.classList.remove('active'));
+    const hb=document.querySelector('.menu button[data-page="home"]'); if(hb) hb.classList.add('active');
+  }
+  function showShell(){
+    $('landing').classList.add('hidden');
+    $('application').classList.remove('hidden');
+    if(USER){
+      $('userName').textContent=USER.full_name||USER.email||'';
+      $('userPlan').textContent=USER.plan==='FULL'?'Tam Sürüm':'Demo';
+      $('adminShortcut').classList.toggle('hidden',USER.role!=='ADMIN');
+    }
+    showHomeNow();
+  }
 
   window.enterApp = async function(){
     if(booting) return;
@@ -498,30 +519,41 @@ setTimeout(()=>{try{if(TOKEN)api('syncLegacyDocumentSettingsWeb',TOKEN)}catch(e)
     try{
       if(!TOKEN) throw new Error('Oturum bulunamadı.');
       if(!USER){
-        const s=failIf(await api('getSession',TOKEN));
-        USER=s.user;
+        try{
+          const s=failIf(await timeout(api('getSession',TOKEN),5000,'Oturum doğrulaması gecikti.'));
+          USER=s.user;
+        }catch(e){
+          console.warn('getSession timeout/failure',e);
+        }
       }
-      $('landing').classList.add('hidden');
-      $('application').classList.remove('hidden');
-      $('userName').textContent=USER.full_name||USER.email;
-      $('userPlan').textContent=USER.plan==='FULL'?'Tam Sürüm':'Demo';
-      $('adminShortcut').classList.toggle('hidden',USER.role!=='ADMIN');
-      await Promise.all([loadSettingsAll(),loadDashboard()]);
-      document.querySelectorAll('.page').forEach(x=>x.classList.add('hidden'));
-      const home=$('page-home'); if(home) home.classList.remove('hidden');
-      document.querySelectorAll('.menu button').forEach(x=>x.classList.remove('active'));
-      const hb=document.querySelector('.menu button[data-page="home"]'); if(hb) hb.classList.add('active');
+
+      // Kabuk ve Ana Sayfa hiçbir ağır çağrıyı beklemeden görünür olsun.
+      showShell();
+      loading(false);
+
+      // Dashboard öncelikli; ayarlar daha sonra gelebilir.
+      try{
+        await timeout(loadDashboard(),6000,'Ana Sayfa verileri gecikti.');
+      }catch(e){
+        console.warn('dashboard timeout/failure',e);
+        const gm=$('globalMsg');
+        if(gm) gm.innerHTML='<div class="note">Ana Sayfa açıldı. Veriler gecikirse birkaç saniye içinde otomatik yenilenecek.</div>';
+        setTimeout(()=>{ try{loadDashboard()}catch(_){} },1200);
+      }
+
+      // Ayarlar açılışı bloke etmez.
+      timeout(loadSettingsAll(),7000,'Ayarlar gecikti.')
+        .catch(e=>{
+          console.warn('settings timeout/failure',e);
+          setTimeout(()=>{ try{loadSettingsAll()}catch(_){} },1800);
+        });
     }catch(e){
       console.error('enterApp',e);
-      const hasToken=!!TOKEN;
-      if(!hasToken){
+      if(!TOKEN){
         $('landing').classList.remove('hidden');
         $('application').classList.add('hidden');
       }else{
-        $('landing').classList.add('hidden');
-        $('application').classList.remove('hidden');
-        const gm=$('globalMsg');
-        if(gm) gm.innerHTML='<div class="msg err">Bağlantı yenileniyor. Birkaç saniye içinde tekrar deneyin.</div>';
+        showShell();
       }
     }finally{
       booting=false;
@@ -531,7 +563,6 @@ setTimeout(()=>{try{if(TOKEN)api('syncLegacyDocumentSettingsWeb',TOKEN)}catch(e)
 
   async function recoverVisibleApp(){
     if(document.visibilityState!=='visible') return;
-    lastVisibleAt=Date.now();
     try{
       document.documentElement.style.visibility='visible';
       document.body.style.visibility='visible';
@@ -539,17 +570,13 @@ setTimeout(()=>{try{if(TOKEN)api('syncLegacyDocumentSettingsWeb',TOKEN)}catch(e)
       if(!TOKEN) return;
       const app=$('application');
       const landing=$('landing');
-      const noVisiblePage=[...document.querySelectorAll('.page')].every(p=>p.classList.contains('hidden'));
       if(!app || app.classList.contains('hidden')){
-        USER=null;
         await enterApp();
         return;
       }
       if(landing && !landing.classList.contains('hidden')) landing.classList.add('hidden');
-      if(noVisiblePage){
-        const home=$('page-home'); if(home) home.classList.remove('hidden');
-      }
-      // Chrome/Apps Script iframe yeniden çizim problemi için tek karelik repaint.
+      const noVisiblePage=[...document.querySelectorAll('.page')].every(p=>p.classList.contains('hidden'));
+      if(noVisiblePage) showHomeNow();
       document.body.style.transform='translateZ(0)';
       requestAnimationFrame(()=>{document.body.style.transform='';});
     }catch(e){console.error('recoverVisibleApp',e);}
@@ -563,12 +590,7 @@ setTimeout(()=>{try{if(TOKEN)api('syncLegacyDocumentSettingsWeb',TOKEN)}catch(e)
 
   window.addEventListener('load',()=>{
     ensureLoadingBox();
-    if(TOKEN){
-      setTimeout(()=>{
-        const app=$('application');
-        if(app && app.classList.contains('hidden')) enterApp();
-      },150);
-    }
+    if(TOKEN) setTimeout(()=>enterApp(),120);
   });
 })();
 </script>
