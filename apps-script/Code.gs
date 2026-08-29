@@ -100,7 +100,7 @@ function listRecords(token) {
   const u=requireUser_(token);
   const rows=sheetObjects_(getDb_().getSheetByName('RECORDS')).filter(r=>String(r.user_id)===String(u.id));
   rows.sort((a,b)=>new Date(b.updated_at)-new Date(a.updated_at));
-  return {ok:true,records:rows};
+  return {ok:true,records:rows.map(jsonSafeObject_)};
 }
 
 function updateRecordStatus(token,recordId,status) {
@@ -165,7 +165,9 @@ function sessionUser_(token){ token=String(token||''); if(!token)return null; co
 function requireUser_(token){ const u=sessionUser_(token); if(!u)throw new Error('Oturum süresi dolmuş. Yeniden giriş yapın.'); if(!truthy_(u.active)||String(u.plan)==='BLOCKED')throw new Error('Üyelik kapalı.'); return u; }
 function enforceTrial_(u){ if(String(u.plan)==='FULL')return; if(String(u.plan)!=='TRIAL')throw new Error('Yeni kayıt yetkiniz yok.'); if(new Date(u.trial_ends_at).getTime()<Date.now())throw new Error('Deneme süreniz doldu.'); if(Number(u.records_created||0)>=Number(u.record_limit||0))throw new Error('Deneme kayıt limitiniz doldu.'); }
 function incrementUsage_(uid){ const sh=getDb_().getSheetByName('USERS'); const vals=sh.getDataRange().getValues(), h=vals[0], ic=h.indexOf('id'), cc=h.indexOf('records_created'); for(let i=1;i<vals.length;i++)if(String(vals[i][ic])===String(uid)){sh.getRange(i+1,cc+1).setValue(Number(vals[i][cc]||0)+1);break;} }
-function safeUser_(u){ return {id:String(u.id),email:String(u.email),full_name:String(u.full_name),role:String(u.role),plan:String(u.plan),active:truthy_(u.active),created_at:u.created_at,trial_ends_at:u.trial_ends_at,record_limit:Number(u.record_limit||0),records_created:Number(u.records_created||0)}; }
+function safeUser_(u){ return {id:String(u.id),email:String(u.email),full_name:String(u.full_name),role:String(u.role),plan:String(u.plan),active:truthy_(u.active),created_at:jsonSafeValue_(u.created_at),trial_ends_at:jsonSafeValue_(u.trial_ends_at),record_limit:Number(u.record_limit||0),records_created:Number(u.records_created||0)}; }
+function jsonSafeValue_(v){ return Object.prototype.toString.call(v)==='[object Date]' ? (isNaN(v.getTime())?'':v.toISOString()) : v; }
+function jsonSafeObject_(o){ const x={}; Object.keys(o||{}).forEach(k=>x[k]=jsonSafeValue_(o[k])); return x; }
 function truthy_(v){ return v===true || String(v).toLowerCase()==='true' || Number(v)===1; }
 function deleteRowsBy_(sh,col,val){ const d=sh.getDataRange().getValues(); if(!d.length)return; const idx=d[0].indexOf(col); for(let i=d.length-1;i>=1;i--)if(String(d[i][idx])===val)sh.deleteRow(i+1); }
 function fail_(m){ return {ok:false,message:m}; }
