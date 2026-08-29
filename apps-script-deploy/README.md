@@ -6,4 +6,6 @@ Bu klasör otomatik üretilir. Google Apps Script'e yalnız şu dosyaları aktar
 - `Index.html`
 - gerekirse `appsscript.json`
 
+İlk açılışta yönetici hesabı web ekranından oluşturulur; ayrıca kod eklemeniz gerekmez.
+
 Geliştirme kaynakları `apps-script/` klasöründedir. Bu klasördeki dosyaları elle düzenlemeyin.

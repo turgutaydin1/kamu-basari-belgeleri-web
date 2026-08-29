@@ -284,6 +284,83 @@ function jsonSafe_(o){const x={};Object.keys(o||{}).forEach(k=>x[k]=jsonValue_(o
 function clean_(v){return String(v==null?'':v).trim();} function cleanTc_(v){return clean_(v).replace(/\D/g,'');} function validEmail_(e){return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e);} function truthy_(v){return v===true||v===1||String(v).toLowerCase()==='true';} function uuid_(){return Utilities.getUuid();} function nowIso_(){return new Date().toISOString();} function uniq_(a){return [...new Set((a||[]).map(String).filter(Boolean))];} function ok_(m){return{ok:true,message:m};} function fail_(m){return{ok:false,message:m};} function yearOf_(v){const d=new Date(v);return isNaN(d)?0:d.getFullYear();} function withinDays_(iso,d){const t=Date.parse(iso);return !!t&&(Date.now()-t)<=d*86400000;} function formatDateTR_(d){return Utilities.formatDate(d,'Europe/Istanbul','dd.MM.yyyy');} function recordNo_(r){return r.yil&&r.sayi?`${r.yil}/${String(r.sayi).padStart(3,'0')}`:'';} function fingerprint_(...p){return sha_(p.join('|').toLocaleLowerCase('tr-TR'));}
 
 
+/* ===== FirstRunService.gs ===== */
+/*
+ * FirstRunService.gs
+ * İlk kurulumda kullanıcıya kod ekletmeden ilk yönetici hesabını oluşturur.
+ */
+
+function getFirstRunState() {
+  ensureSystem_();
+  const admins = rows_('users').filter(r => String(r.role || '').toUpperCase() === 'ADMIN' && truthy_(r.active));
+  return {ok:true, configured:admins.length > 0};
+}
+
+function createFirstAdmin(fullName, email, password) {
+  ensureSystem_();
+  const lock = LockService.getScriptLock();
+  lock.waitLock(30000);
+  try {
+    const existingAdmin = rows_('users').find(r => String(r.role || '').toUpperCase() === 'ADMIN' && truthy_(r.active));
+    if (existingAdmin) return fail_('İlk kurulum daha önce tamamlanmış.');
+
+    fullName = clean_(fullName);
+    email = clean_(email).toLowerCase();
+    password = String(password || '');
+    if (fullName.length < 3) return fail_('Ad Soyad girin.');
+    if (!validEmail_(email)) return fail_('Geçerli e-posta girin.');
+    if (password.length < 8) return fail_('Parola en az 8 karakter olmalıdır.');
+
+    let user = findOne_('users', r => clean_(r.email).toLowerCase() === email);
+    if (!user) {
+      const id = uuid_();
+      append_('users', {
+        id:id,
+        email:email,
+        full_name:fullName,
+        password_hash:makePassword_(password),
+        role:'ADMIN',
+        plan:'FULL',
+        active:true,
+        created_at:nowIso_(),
+        trial_ends_at:'',
+        record_limit:0,
+        records_created:0
+      });
+      ensureUserFolders_(id,email);
+      seedConfig_(id);
+      audit_(id,'FIRST_ADMIN_CREATED','',email);
+      user = findOne_('users', r => String(r.id) === String(id));
+    } else {
+      updateById_('users', user.id, {
+        full_name:fullName,
+        password_hash:makePassword_(password),
+        role:'ADMIN',
+        plan:'FULL',
+        active:true,
+        trial_ends_at:'',
+        record_limit:0
+      });
+      ensureUserFolders_(user.id,email);
+      seedConfig_(user.id);
+      audit_(user.id,'FIRST_ADMIN_PROMOTED','',email);
+      user = findOne_('users', r => String(r.id) === String(user.id));
+    }
+
+    const token = uuid_() + uuid_();
+    append_('sessions', {
+      token:token,
+      user_id:user.id,
+      created_at:nowIso_(),
+      expires_at:new Date(Date.now()+SESSION_HOURS*3600000).toISOString()
+    });
+    return {ok:true, token:token, user:safeUser_(user), message:'İlk yönetici hesabı oluşturuldu.'};
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+
 /* ===== RecordService.gs ===== */
 /*
  * RecordService.gs
