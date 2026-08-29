@@ -1,60 +1,79 @@
-KAMU KURUMLARI BAŞARI BELGELERİ - GOOGLE CLOUD + GOOGLE SITES KURULUMU
+KAMU KURUMLARI BAŞARI BELGELERİ - GOOGLE SITES + APPS SCRIPT KURULUMU
 
-ÖNEMLİ:
-- Railway kullanılmıyor.
-- Yeni bir üçüncü taraf hosting hesabı açılmıyor.
-- Mevcut Google hesabınızla Google Cloud kullanılacak.
-- GitHub'daki dosyalar kalacak; GitHub yalnız kaynak kod deposu olacak.
-- Kullanıcı verileri GitHub'a yazılmayacak.
-- Kullanıcı verileri Google Cloud VM'nin kalıcı diskinde /opt/basari-data altında tutulacak.
-- Tam ayrıntılı anlatım için GOOGLE_CLOUD_KURULUM.md dosyasını açın.
+BU SÜRÜMDE:
+- Railway yok.
+- Google Cloud VM yok.
+- Docker yok.
+- Yeni hosting hesabı yok.
+- Mevcut Google ve GitHub hesabın yeterli.
 
-KISA SIRA:
-1) Google Cloud Console'a mevcut Google hesabınla gir.
-2) Yeni proje oluştur: kamu-basari-belgeleri.
-3) VPC Network > IP addresses bölümünden Regional Static IPv4 ayır.
-4) Compute Engine'de Ubuntu 24.04 veya Debian 12 VM oluştur.
-5) External IPv4 olarak ayırdığın sabit IP'yi seç.
-6) Allow HTTP ve Allow HTTPS seçeneklerini işaretle.
-7) VM'de SSH aç.
-8) Şunları çalıştır:
+KULLANILANLAR:
+Google Sites + Google Apps Script + Google Sheets + Google Drive + GitHub
 
-sudo apt update
-sudo apt install -y docker.io docker-compose-v2 git
-sudo systemctl enable --now docker
-cd /opt
-sudo git clone https://github.com/turgutaydin1/kamu-basari-belgeleri-web.git basari-web
-sudo chown -R $USER:$USER /opt/basari-web
-cd /opt/basari-web
-cp .env.example .env
-nano .env
+KISA KURULUM:
 
-9) .env içinde şu alanları doldur:
-WEB_ADMIN_EMAIL=kendi e-posta adresin
-WEB_ADMIN_PASSWORD=guclu bir parola
-WEB_TRIAL_DAYS=7
-WEB_TRIAL_RECORD_LIMIT=10
-WEB_SESSION_DAYS=7
-APP_DOMAIN=SABIT_IP_ADRESIN.sslip.io
+1) https://script.google.com adresine mevcut Google hesabınla gir.
+2) Yeni proje oluştur. Ad: Kamu Başarı Belgeleri Web
+3) GitHub deposunda apps-script/Code.gs dosyasını aç.
+4) Apps Script'teki Code.gs içeriğini tamamen sil ve GitHub'daki Code.gs içeriğini yapıştır.
+5) Apps Script sol taraf + > HTML seç. Dosya adı: Index
+6) GitHub'daki apps-script/Index.html içeriğini buraya yapıştır.
+7) Apps Script > Proje Ayarları > appsscript.json manifestini göster seçeneğini aç.
+8) appsscript.json dosyasını GitHub'daki apps-script/appsscript.json içeriğiyle değiştir.
 
-10) Ardından:
-sudo mkdir -p /opt/basari-data
-sudo chown -R $USER:$USER /opt/basari-data
-docker compose up -d --build
+İLK KURULUM:
+9) Code.gs dosyasının EN ALTINA geçici olarak şunu ekle:
 
-11) Tarayıcıda:
-https://SABIT_IP_ADRESIN.sslip.io
-adresini aç.
+function ilkKurulum() {
+  setupSystem('KENDI_EPOSTA_ADRESIN');
+}
 
-12) Yönetici hesabınla giriş yap.
-13) Gizli sekmede yeni deneme üyesi oluştur ve 7 gün / 10 kayıt sınırını dene.
-14) Google Sites > Ekle > Yerleştir (Embed) bölümüne aynı https adresini koy.
-15) Siteyi yayınla.
+10) KENDI_EPOSTA_ADRESIN yerine kendi Gmail/Google e-posta adresini yaz.
+11) Üst fonksiyon listesinden ilkKurulum seç ve Çalıştır de.
+12) Google izin isterse Sheets ve Drive erişimine izin ver.
+13) Google Drive'da otomatik olarak şu iki şey oluşur:
+    - Kamu Başarı Belgeleri - Sistem Veritabanı
+    - Kamu Başarı Belgeleri - Kullanıcı Verileri
 
-GÜNCELLEME:
-GitHub'a yeni kod geldiğinde VM'de:
-cd /opt/basari-web
-git pull
-docker compose up -d --build
+WEB UYGULAMASINI YAYINLA:
+14) Apps Script sağ üst > Dağıt > Yeni dağıtım.
+15) Tür: Web uygulaması.
+16) Şu kullanıcı olarak çalıştır: Ben.
+17) Erişimi olanlar: Herkes.
+18) Dağıt de.
+19) Sana verilen https://script.google.com/macros/s/.../exec adresini kopyala.
 
-KULLANICI VERİLERİ KOD GÜNCELLEMESİNDE SİLİNMEZ; /opt/basari-data ALTINDA KALIR.
+YÖNETİCİ HESABI:
+20) /exec adresini aç.
+21) Kendi e-posta adresinle Üye Ol kısmından kayıt aç ve parolanı belirle.
+22) Apps Script editörüne dön, ilkKurulum fonksiyonunu bir kez daha Çalıştır.
+23) Hesabın ADMIN + FULL olur.
+
+DENEME TESTİ:
+24) Gizli sekme aç.
+25) /exec adresine gir.
+26) Farklı e-posta ile Üye Ol.
+27) Giriş yap.
+28) Varsayılan sınır 7 gün / 10 kayıttır.
+29) Yeni belge kaydı oluştur.
+30) Kayıtlar bölümünde kaydın durduğunu kontrol et.
+31) Çıkış yap ve tekrar giriş yap; kayıt kalıcı olmalıdır.
+
+ÜYE YÖNETİMİ:
+32) Kendi yönetici hesabınla giriş yap.
+33) Üye Yönetimi sekmesini aç.
+34) Kullanıcıyı TRIAL, FULL veya BLOCKED yapabilirsin.
+35) Deneme gününü ve kayıt limitini değiştirebilirsin.
+
+GOOGLE SITES'E GÖMME:
+36) https://sites.google.com adresinde siteni aç.
+37) Sağ panel > Ekle > Yerleştir.
+38) URL olarak Apps Script /exec adresini yapıştır.
+39) Ekle de.
+40) Uygulama alanını genişlet ve siteyi yayınla.
+
+DAHA DETAYLI ANLATIM:
+apps-script/KURULUM.md
+
+NOT:
+Bu yapı ücretsiz Google Apps Script/Sheets/Drive kotalarına tabidir. Kısıtlı demo ve düşük/orta hacimli kullanım için uygundur. Çok yüksek yoğunlukta kullanımda günlük Google kotaları sınırlayıcı olabilir.
