@@ -1,37 +1,65 @@
-# Kamu Kurumları Başarı Belgeleri — Google Sites / Apps Script
+# Kamu Kurumları Başarı Belgeleri — Web Demo
 
-Bu depo artık **ücretli sunucu gerektirmeyen Google-only web düzenini** içerir.
+Bu depo, masaüstünde tamamlanan **Kamu Kurumları Başarı Belgeleri Düzenleme ve Takip Sistemi'nin orijinal `app.py` sürümünü** web demosunda doğrudan çalıştırır.
 
-## Kullanılan servisler
-- Google Sites — vitrin / gömme sayfası
-- Google Apps Script — web uygulaması ve üyelik mantığı
-- Google Sheets — kullanıcı ve kayıt verileri
-- Google Drive — kullanıcıya özel dosya alanları
-- GitHub — kaynak kod deposu
+## Temel ilke
 
-Yeni Railway, Google Cloud VM veya başka bir hosting hesabı gerekmez.
+Web demosu için Başarı Belgeleri sistemi yeniden yazılmamıştır ve sadeleştirilmiş bir taklit arayüz kullanılmaz.
 
-## Üyelik sistemi
+- `app.py` → orijinal ve tam Başarı Belgeleri sistemi
+- `web_auth.py` → tanıtım sayfası, üyelik, giriş, demo limiti ve kullanıcı çalışma alanı
+- `web_app.py` → web giriş noktası; `BASARI_WEB_MODE=1` ile doğrudan orijinal `app.py`yi açar
+
+Kullanıcı akışı:
+
+**Tanıtım → Demoyu Dene → Üyelik → Orijinal Başarı Belgeleri Sistemi**
+
+Üye giriş yaptıktan sonra gördüğü kayıt, fotoğraf, imza, Excel aktarımı, Taslak, Olur, toplu işlemler, kesinleştirme, tarih/sayı, PDF, Üstün Başarı dayanakları, arşiv, sistem ayarları ve yedekleme ekranları `app.py`deki gerçek sistemdir.
+
+## Demo üyeliği
+
 Yeni kullanıcı varsayılan olarak:
+
 - 7 gün
 - 10 yeni kayıt
 
-ile `TRIAL` hesabı açar.
+ile `TRIAL` hesabı açar. Demo sınırı yalnız üyelik/kullanım sınırıdır; program özellikleri temsili ekranlara dönüştürülmez.
 
-Yönetici kullanıcıyı `TRIAL`, `FULL` veya `BLOCKED` yapabilir; deneme günü ve kayıt limitini değiştirebilir.
+Yönetici üyeyi `TRIAL`, `FULL` veya `BLOCKED` yapabilir ve kayıt limitini değiştirebilir.
 
-## Kullanılacak dosyalar
-Google Sites'te çalışacak yeni sürüm:
-- `apps-script/Code.gs`
-- `apps-script/Index.html`
-- `apps-script/appsscript.json`
+## Kullanıcı verileri
 
-Kurulum:
-- `apps-script/KURULUM.md`
-- `ADIM_ADIM_KURULUM.txt`
+Her üyeye ayrı çalışma klasörü açılır. Orijinal uygulamanın SQLite veritabanı, fotoğrafları, imzaları, belgeleri, şablonları ve yedekleri bu kullanıcı alanında tutulur; kullanıcı verileri birbirine karışmaz.
 
-## Eski Python sürümü
-Kök dizindeki `app.py`, `web_auth.py`, `requirements.txt` ve ilgili dosyalar eski Streamlit sürümünün kaynak referansı olarak şimdilik korunmaktadır. Google Sites üzerinde bunlar çalıştırılmaz.
+Kalıcı bir sunucuda `/data` dizini kalıcı disk/volume olarak bağlanmalıdır.
 
-## Önemli not
-Google Apps Script ücretsiz kullanım kotalarına tabidir. Bu mimari kısıtlı demo ve düşük/orta hacimli kullanım için uygundur. Çok yüksek eşzamanlı kullanıcı veya yoğun dosya/PDF işleme ihtiyacı olursa ileride sunucu mimarisi ayrıca değerlendirilir.
+## Çalıştırma
+
+Gerekli Python paketleri `requirements.txt` içindedir.
+
+Web demosunun giriş dosyası:
+
+`web_app.py`
+
+Çalıştırma komutu:
+
+`streamlit run web_app.py`
+
+İsteğe bağlı ortam değişkenleri:
+
+- `WEB_DATA_ROOT` — kalıcı veri dizini; varsayılan `/data`
+- `WEB_TRIAL_DAYS` — varsayılan `7`
+- `WEB_TRIAL_RECORD_LIMIT` — varsayılan `10`
+- `WEB_SESSION_DAYS` — oturum süresi; varsayılan `7`
+- `WEB_ADMIN_EMAIL` — ilk yönetici e-postası
+- `WEB_ADMIN_PASSWORD` — ilk yönetici parolası
+
+## Google Sites
+
+Google Sites tanıtım/portal katmanı olarak kullanılabilir. Gerçek program Python/Streamlit çalıştırabildiği bir web adresinde yayınlanır; bu adres Google Sites'e bağlantı veya uygun olduğunda gömme yoluyla eklenebilir.
+
+Google Apps Script ile hazırlanmış eski sadeleştirilmiş prototip kaldırılmıştır; çünkü orijinal sistemi birebir göstermiyordu.
+
+## Durum
+
+Repo tarafındaki doğru mimari hazırdır. İnternete açık gerçek kullanım için sonraki adım, `web_app.py`yi **kalıcı `/data` alanı bulunan bir Python/Streamlit sunucusunda** yayınlamaktır.
