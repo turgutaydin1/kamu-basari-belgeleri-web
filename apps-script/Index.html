@@ -1,110 +1,150 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <base target="_top">
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    :root{--bg:#f5f7f8;--card:#fff;--ink:#1f2937;--muted:#6b7280;--green:#0f6b4f;--green2:#0b5a43;--line:#dfe5e7;--danger:#b42318}
-    *{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
-    header{background:var(--green);color:#fff;padding:18px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-    header h1{font-size:20px;margin:0}header small{opacity:.9}
-    .wrap{max-width:1200px;margin:24px auto;padding:0 16px}.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
-    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-    label{font-size:13px;font-weight:700;display:block;margin-bottom:5px}input,select,textarea{width:100%;padding:10px;border:1px solid #cfd8dc;border-radius:8px;background:#fff;font-size:14px}textarea{min-height:88px;resize:vertical}
-    button{border:0;border-radius:8px;padding:10px 14px;font-weight:700;cursor:pointer;background:var(--green);color:#fff}button:hover{background:var(--green2)}button.secondary{background:#eef3f1;color:var(--green)}button.danger{background:var(--danger)}button:disabled{opacity:.55;cursor:not-allowed}
-    .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.tab{background:#e9efed;color:#24463b}.tab.active{background:var(--green);color:#fff}.hidden{display:none!important}
-    .msg{padding:10px 12px;border-radius:8px;margin:10px 0;background:#eef7f3;color:#155a43}.err{background:#fff0ee;color:#9b1c12}.muted{color:var(--muted);font-size:13px}.pill{display:inline-block;padding:4px 8px;border-radius:99px;background:#eaf4ef;color:#155a43;font-size:12px;font-weight:700}
-    table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#f3f6f5}.scroll{overflow:auto}
-    .auth{max-width:520px;margin:48px auto}.auth .tabs{justify-content:center}.stat{padding:14px;border:1px solid var(--line);border-radius:10px;background:#fbfcfc}.stat b{font-size:24px;display:block;margin-top:4px}
-    @media(max-width:760px){.grid,.grid3{grid-template-columns:1fr}header{align-items:flex-start}.wrap{margin-top:12px}}
-  </style>
+<base target="_top"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{--bg:#f4f7f6;--card:#fff;--ink:#20312c;--muted:#6d7b77;--green:#0f6b4f;--green2:#0b5a43;--line:#dce5e1;--gold:#b28b42;--danger:#b42318}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:var(--green);color:#fff;padding:18px 28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+header h1{font-size:20px;margin:0}header small{opacity:.9}.wrap{max-width:1320px;margin:24px auto;padding:0 16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.hidden{display:none!important}.muted{color:var(--muted);font-size:13px}.pill{display:inline-block;padding:4px 8px;border-radius:99px;background:#eaf4ef;color:#155a43;font-size:12px;font-weight:700}
+button{border:0;border-radius:8px;padding:10px 14px;font-weight:700;cursor:pointer;background:var(--green);color:#fff}button:hover{background:var(--green2)}
+button.secondary{background:#eef3f1;color:var(--green)}.hero{padding:56px 36px;background:linear-gradient(135deg,#f7fbf9,#eaf5f0);border:1px solid var(--line);border-radius:18px}
+.hero h2{font-size:36px;line-height:1.15;margin:0 0 14px}.hero p{font-size:17px;line-height:1.6;max-width:880px;color:#42544e}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.features{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:22px}
+.feature{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px}.feature b{display:block;margin-bottom:6px}
+.auth{max-width:520px;margin:32px auto}.tabs,.menu{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.tab,.menu button{background:#e9efed;color:#24463b}
+.tab.active,.menu button.active{background:var(--green);color:#fff}.msg{padding:10px 12px;border-radius:8px;margin:10px 0;background:#eef7f3;color:#155a43}.err{background:#fff0ee;color:#9b1c12}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+label{font-size:13px;font-weight:700;display:block;margin-bottom:5px}input,select,textarea{width:100%;padding:10px;border:1px solid #cfd8dc;border-radius:8px;background:#fff;font-size:14px}
+textarea{min-height:95px;resize:vertical}.stat{padding:14px;border:1px solid var(--line);border-radius:10px;background:#fbfcfc}.stat b{font-size:24px;display:block;margin-top:4px}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#f3f6f5}.scroll{overflow:auto}
+.notice{border-left:4px solid var(--gold);background:#fffaf0;padding:12px 14px;border-radius:8px}.coming{padding:28px;text-align:center;color:var(--muted)}
+@media(max-width:850px){.features,.grid,.grid3{grid-template-columns:1fr}.hero h2{font-size:28px}}
+</style>
 </head>
 <body>
 <header>
-  <div><h1>🏅 Kamu Kurumları Başarı Belgeleri</h1><small>Google Sites / Apps Script web sürümü</small></div>
-  <div id="userHead" class="hidden"><span id="headName"></span> <span id="headPlan" class="pill"></span> <button class="secondary" onclick="logout()">Çıkış</button></div>
+ <div><h1>🏅 Kamu Kurumları Başarı Belgeleri</h1><small>Düzenleme ve Takip Sistemi</small></div>
+ <div id="userHead" class="hidden"><span id="headName"></span> <span id="headPlan" class="pill"></span> <button class="secondary" onclick="logout()">Çıkış</button></div>
 </header>
+
 <div class="wrap">
-  <section id="authBox" class="auth card">
-    <div class="tabs"><button class="tab active" id="loginTab" onclick="showAuth('login')">Giriş Yap</button><button class="tab" id="registerTab" onclick="showAuth('register')">Üye Ol / Deneme Başlat</button></div>
-    <div id="authMsg"></div>
-    <div id="loginPane">
-      <div><label>E-posta</label><input id="loginEmail" type="email"></div><br>
-      <div><label>Parola</label><input id="loginPass" type="password"></div><br>
-      <button onclick="login()">Giriş Yap</button>
-    </div>
-    <div id="registerPane" class="hidden">
-      <p class="muted">Yeni üyeler varsayılan olarak 7 gün / 10 kayıt hakkıyla başlar.</p>
-      <div><label>Ad Soyad</label><input id="regName"></div><br>
-      <div><label>E-posta</label><input id="regEmail" type="email"></div><br>
-      <div><label>Parola</label><input id="regPass" type="password"></div><br>
-      <button onclick="register()">Üye Ol</button>
-    </div>
-  </section>
+<section id="landing">
+ <div class="hero">
+  <div class="pill">Kamu kurumları için belge düzenleme ve takip sistemi</div>
+  <h2>Başarı ve Üstün Başarı Belgelerini<br>tek sistemden yönetin.</h2>
+  <p>Personel kayıtlarından Olur sürecine, belge arşivinden toplu işlemlere; kurum bilgileri, imza, fotoğraf, şablon ve yedekleme süreçlerini tek bir çalışma alanında yönetin.</p>
+  <div class="hero-actions">
+   <button onclick="openDemo()">Demoyu Dene</button>
+   <button class="secondary" onclick="openLogin()">Üye Girişi</button>
+  </div>
+  <div class="features">
+   <div class="feature"><b>Başarı / Üstün Başarı</b><span class="muted">İki belge türü için ayrı süreç, numaralandırma ve gerekçe yapısı.</span></div>
+   <div class="feature"><b>Olur ve Arşiv Süreci</b><span class="muted">Taslak, Olur listesi, teslim ve arşiv durumlarını takip edin.</span></div>
+   <div class="feature"><b>Toplu İşlemler</b><span class="muted">Excel aktarımı, toplu Olur, fotoğraf eşleştirme, yedekleme ve diğer toplu işlemler.</span></div>
+   <div class="feature"><b>Kurumsal Ayarlar</b><span class="muted">Kurum, imza sahibi, gerekçeler, şablonlar ve numara biçimleri.</span></div>
+   <div class="feature"><b>Belge ve Dosya Yönetimi</b><span class="muted">Fotoğraf, imza, belge çıktıları ve kullanıcıya özel dosya alanı.</span></div>
+   <div class="feature"><b>Kısıtlı Demo</b><span class="muted">Yeni üyeler 7 gün / 10 kayıt hakkıyla sistemi deneyebilir.</span></div>
+  </div>
+ </div>
+</section>
 
-  <section id="appBox" class="hidden">
-    <div class="tabs">
-      <button class="tab active" data-page="home" onclick="page('home',this)">Ana Sayfa</button>
-      <button class="tab" data-page="new" onclick="page('new',this)">Yeni Belge</button>
-      <button class="tab" data-page="records" onclick="page('records',this)">Kayıtlar</button>
-      <button class="tab" data-page="drive" onclick="page('drive',this)">Dosya Alanım</button>
-      <button class="tab hidden" id="adminTabBtn" data-page="admin" onclick="page('admin',this)">Üye Yönetimi</button>
-    </div>
+<section id="authBox" class="auth card hidden">
+ <div class="tabs">
+  <button class="tab active" id="loginTab" onclick="showAuth('login')">Giriş Yap</button>
+  <button class="tab" id="registerTab" onclick="showAuth('register')">Demoyu Dene / Üye Ol</button>
+ </div>
+ <div id="authMsg"></div>
+ <div id="loginPane">
+  <label>E-posta</label><input id="loginEmail" type="email"><br><br>
+  <label>Parola</label><input id="loginPass" type="password"><br><br>
+  <button onclick="login()">Giriş Yap</button>
+ </div>
+ <div id="registerPane" class="hidden">
+  <div class="notice">Demo hesabı varsayılan olarak <b>7 gün / 10 yeni kayıt</b> hakkıyla açılır.</div><br>
+  <label>Ad Soyad</label><input id="regName"><br><br>
+  <label>E-posta</label><input id="regEmail" type="email"><br><br>
+  <label>Parola</label><input id="regPass" type="password"><br><br>
+  <button onclick="register()">Demo Hesabı Oluştur</button>
+ </div>
+</section>
 
-    <div id="globalMsg"></div>
-    <div id="page-home" class="page card">
-      <h2>Genel Durum</h2>
-      <div class="grid3"><div class="stat">Üyelik<b id="statPlan">-</b></div><div class="stat">Kullanılan Kayıt<b id="statUsed">0</b></div><div class="stat">Kalan Hak<b id="statRemain">-</b></div></div>
-      <p class="muted" id="trialInfo"></p>
-    </div>
+<section id="appBox" class="hidden">
+ <div class="menu">
+  <button class="active" data-page="home" onclick="page('home',this)">🏠 Ana Sayfa</button>
+  <button data-page="new" onclick="page('new',this)">➕ Yeni Belge Kaydı</button>
+  <button data-page="excel" onclick="page('excel',this)">📊 Excel’den Yeni Toplu Kayıt Ekle</button>
+  <button data-page="drafts" onclick="page('drafts',this)">📝 Taslak Kayıtlar</button>
+  <button data-page="approval" onclick="page('approval',this)">📋 Olur Listesindeki Kayıtlar</button>
+  <button data-page="archive" onclick="page('archive',this)">📚 Belge Arşivi</button>
+  <button data-page="bulk" onclick="page('bulk',this)">🗂️ Toplu İşlemler</button>
+  <button data-page="settings" onclick="page('settings',this)">⚙️ Sistem Ayarları</button>
+  <button data-page="backup" onclick="page('backup',this)">💾 Yedekleme ve Dışa Aktarım</button>
+  <button class="hidden" id="adminTabBtn" data-page="admin" onclick="page('admin',this)">🛡️ Üye Yönetimi</button>
+ </div>
+ <div id="globalMsg"></div>
 
-    <div id="page-new" class="page card hidden">
-      <h2>Yeni Belge Kaydı</h2>
-      <div class="grid">
-        <div><label>T.C. Kimlik No</label><input id="fTc" maxlength="11"></div>
-        <div><label>Ad Soyad</label><input id="fAd"></div>
-        <div><label>Ünvan</label><input id="fUnvan"></div>
-        <div><label>Görev Yeri</label><input id="fGorev"></div>
-        <div><label>Belge Türü</label><select id="fTur"><option value="BASARI">Başarı Belgesi</option><option value="USTUN_BASARI">Üstün Başarı Belgesi</option></select></div>
-        <div><label>Tarih</label><input id="fTarih" placeholder="GG.AA.YYYY"></div>
-        <div><label>Sayı</label><input id="fSayi"></div>
-      </div><br>
-      <div><label>Gerekçe</label><textarea id="fGerekce"></textarea></div><br>
-      <button onclick="createRecord()">Kaydı Oluştur</button>
-    </div>
+ <div id="page-home" class="page card">
+  <h2>Ana Sayfa</h2>
+  <div class="grid3">
+   <div class="stat">Üyelik<b id="statPlan">-</b></div>
+   <div class="stat">Kullanılan Kayıt<b id="statUsed">0</b></div>
+   <div class="stat">Kalan Hak<b id="statRemain">-</b></div>
+  </div>
+  <p class="muted" id="trialInfo"></p>
+ </div>
 
-    <div id="page-records" class="page card hidden">
-      <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap"><h2>Kayıtlarım</h2><button class="secondary" onclick="loadRecords()">Yenile</button></div>
-      <div class="scroll"><table><thead><tr><th>Ad Soyad</th><th>TC</th><th>Ünvan</th><th>Belge</th><th>Tarih/Sayı</th><th>Durum</th><th>İşlem</th></tr></thead><tbody id="recordRows"></tbody></table></div>
-    </div>
+ <div id="page-new" class="page card hidden">
+  <h2>Yeni Belge Kaydı</h2>
+  <div class="grid">
+   <div><label>T.C. Kimlik No</label><input id="fTc" maxlength="11"></div>
+   <div><label>Ad Soyad</label><input id="fAd"></div>
+   <div><label>Ünvan</label><input id="fUnvan"></div>
+   <div><label>Görev Yeri</label><input id="fGorev"></div>
+   <div><label>Belge Türü</label><select id="fTur"><option value="BASARI">Başarı Belgesi</option><option value="USTUN_BASARI">Üstün Başarı Belgesi</option></select></div>
+   <div><label>Tarih</label><input id="fTarih" placeholder="GG.AA.YYYY"></div>
+   <div><label>Sayı</label><input id="fSayi"></div>
+  </div><br>
+  <label>Gerekçe</label><textarea id="fGerekce"></textarea><br>
+  <button onclick="createRecord()">Kaydı Oluştur</button>
+ </div>
 
-    <div id="page-drive" class="page card hidden"><h2>Kullanıcı Dosya Alanı</h2><p>Fotoğraflar, imzalar, belgeler ve yedekler için Google Drive'da hesabınıza özel klasör hazırlanır.</p><button onclick="loadDrive()">Klasör Bilgisini Göster</button><div id="driveInfo"></div></div>
-
-    <div id="page-admin" class="page card hidden"><h2>Üye Yönetimi</h2><div id="adminRows"></div></div>
-  </section>
+ <div id="page-drafts" class="page card hidden"><h2>Taslak Kayıtlar</h2><div id="draftRows"></div></div>
+ <div id="page-approval" class="page card hidden"><h2>Olur Listesindeki Kayıtlar</h2><div id="approvalRows"></div></div>
+ <div id="page-archive" class="page card hidden"><h2>Belge Arşivi</h2><div id="archiveRows"></div></div>
+ <div id="page-excel" class="page card hidden"><h2>Excel’den Yeni Toplu Kayıt Ekle</h2><div class="coming">Bu ekran tam masaüstü sistemdeki Excel aktarım mantığı esas alınarak web sürümüne taşınıyor.</div></div>
+ <div id="page-bulk" class="page card hidden"><h2>Toplu İşlemler</h2><div class="coming">Toplu Olur, teslim, taslağa döndürme, yedekleme, fotoğraf eşleştirme, silme ve iptal işlemleri bu menü altında taşınacak.</div></div>
+ <div id="page-settings" class="page card hidden"><h2>Sistem Ayarları</h2><div class="coming">Kurum bilgileri, imza sahipleri, belge numaralandırma, gerekçeler, şablonlar ve diğer ayarlar burada olacak.</div></div>
+ <div id="page-backup" class="page card hidden"><h2>Yedekleme ve Dışa Aktarım</h2><button onclick="loadDrive()">Kullanıcı Dosya Alanını Kontrol Et</button><div id="driveInfo"></div></div>
+ <div id="page-admin" class="page card hidden"><h2>Üye Yönetimi</h2><div id="adminRows"></div></div>
+</section>
 </div>
+
 <script>
-let TOKEN=localStorage.getItem('basari_token')||''; let USER=null;
-function qs(id){return document.getElementById(id)}
-function call(name,...args){return new Promise((resolve,reject)=>{google.script.run.withSuccessHandler(resolve).withFailureHandler(e=>reject(new Error(e.message||e)))[name](...args)})}
-function msg(id,text,err=false){qs(id).innerHTML=text?`<div class="msg ${err?'err':''}">${escapeHtml(text)}</div>`:''}
-function escapeHtml(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+let TOKEN=localStorage.getItem('basari_token')||'', USER=null, ALL_RECORDS=[];
+const qs=id=>document.getElementById(id);
+function call(name,...args){return new Promise((resolve,reject)=>google.script.run.withSuccessHandler(resolve).withFailureHandler(e=>reject(new Error(e.message||e)))[name](...args))}
+function esc(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+function msg(id,text,err=false){qs(id).innerHTML=text?`<div class="msg ${err?'err':''}">${esc(text)}</div>`:''}
+function openDemo(){qs('landing').classList.add('hidden');qs('authBox').classList.remove('hidden');showAuth('register')}
+function openLogin(){qs('landing').classList.add('hidden');qs('authBox').classList.remove('hidden');showAuth('login')}
 function showAuth(which){qs('loginPane').classList.toggle('hidden',which!=='login');qs('registerPane').classList.toggle('hidden',which!=='register');qs('loginTab').classList.toggle('active',which==='login');qs('registerTab').classList.toggle('active',which==='register');msg('authMsg','')}
-async function login(){try{let r=await call('loginUser',qs('loginEmail').value,qs('loginPass').value);if(!r.ok)return msg('authMsg',r.message,true);TOKEN=r.token;localStorage.setItem('basari_token',TOKEN);USER=r.user;enterApp()}catch(e){msg('authMsg',e.message,true)}}
-async function register(){try{let r=await call('registerUser',qs('regName').value,qs('regEmail').value,qs('regPass').value);msg('authMsg',r.message,!r.ok);if(r.ok)showAuth('login')}catch(e){msg('authMsg',e.message,true)}}
-async function logout(){try{await call('logoutUser',TOKEN)}catch(e){}localStorage.removeItem('basari_token');TOKEN='';USER=null;location.reload()}
-function enterApp(){qs('authBox').classList.add('hidden');qs('appBox').classList.remove('hidden');qs('userHead').classList.remove('hidden');qs('headName').textContent=USER.full_name;qs('headPlan').textContent=USER.plan;qs('adminTabBtn').classList.toggle('hidden',USER.role!=='ADMIN');refreshStats();loadRecords()}
-function refreshStats(){qs('statPlan').textContent=USER.plan==='FULL'?'Tam Sürüm':'Deneme';qs('statUsed').textContent=USER.records_created||0;const remain=USER.plan==='FULL'?'∞':Math.max(0,(USER.record_limit||0)-(USER.records_created||0));qs('statRemain').textContent=remain;qs('trialInfo').textContent=USER.plan==='TRIAL'&&USER.trial_ends_at?('Deneme bitiş: '+new Date(USER.trial_ends_at).toLocaleString('tr-TR')):''}
-function page(name,btn){document.querySelectorAll('.page').forEach(x=>x.classList.add('hidden'));qs('page-'+name).classList.remove('hidden');document.querySelectorAll('.tabs .tab[data-page]').forEach(x=>x.classList.remove('active'));if(btn)btn.classList.add('active');if(name==='records')loadRecords();if(name==='admin')loadAdmin()}
-async function createRecord(){try{let data={tc:qs('fTc').value,ad_soyad:qs('fAd').value,unvan:qs('fUnvan').value,gorev_yeri:qs('fGorev').value,belge_turu:qs('fTur').value,gerekce:qs('fGerekce').value,tarih:qs('fTarih').value,sayi:qs('fSayi').value};if(!data.ad_soyad.trim())return msg('globalMsg','Ad Soyad zorunlu.',true);let r=await call('createRecord',TOKEN,data);msg('globalMsg',r.message,!r.ok);if(r.ok){await reloadUser();['fTc','fAd','fUnvan','fGorev','fGerekce','fTarih','fSayi'].forEach(id=>qs(id).value='');loadRecords()}}catch(e){msg('globalMsg',e.message,true)}}
-async function reloadUser(){let r=await call('getSession',TOKEN);if(r.ok){USER=r.user;refreshStats();qs('headPlan').textContent=USER.plan}}
-async function loadRecords(){try{let r=await call('listRecords',TOKEN);if(!r.ok)return;qs('recordRows').innerHTML=r.records.map(x=>`<tr><td>${escapeHtml(x.ad_soyad)}</td><td>${escapeHtml(x.tc)}</td><td>${escapeHtml(x.unvan)}</td><td>${x.belge_turu==='USTUN_BASARI'?'Üstün Başarı':'Başarı'}</td><td>${escapeHtml(x.tarih)} ${escapeHtml(x.sayi)}</td><td>${escapeHtml(x.status)}</td><td><select onchange="statusChange('${x.id}',this.value)"><option value="">Değiştir...</option><option value="TASLAK">Taslak</option><option value="OLUR_LISTESINDE">Olur Listesinde</option><option value="TESLIM_EDILDI">Teslim Edildi</option><option value="IPTAL">İptal</option></select></td></tr>`).join('')||'<tr><td colspan="7" class="muted">Henüz kayıt yok.</td></tr>'}catch(e){msg('globalMsg',e.message,true)}}
-async function statusChange(id,status){if(!status)return;try{await call('updateRecordStatus',TOKEN,id,status);loadRecords()}catch(e){msg('globalMsg',e.message,true)}}
-async function loadDrive(){try{let r=await call('getDriveInfo',TOKEN);qs('driveInfo').innerHTML=`<div class="msg">Drive klasörü hazır: <b>${escapeHtml(r.folderName)}</b><br><span class="muted">Klasör ID: ${escapeHtml(r.folderId)}</span></div>`}catch(e){msg('globalMsg',e.message,true)}}
-async function loadAdmin(){try{let r=await call('getAdminUsers',TOKEN);qs('adminRows').innerHTML=r.users.filter(u=>u.role!=='ADMIN').map(u=>`<div class="card"><b>${escapeHtml(u.full_name)}</b><div class="muted">${escapeHtml(u.email)}</div><div class="grid3" style="margin-top:10px"><div><label>Üyelik</label><select id="p_${u.id}"><option ${u.plan==='TRIAL'?'selected':''}>TRIAL</option><option ${u.plan==='FULL'?'selected':''}>FULL</option><option ${u.plan==='BLOCKED'?'selected':''}>BLOCKED</option></select></div><div><label>Deneme günü</label><input id="d_${u.id}" type="number" value="7" min="1"></div><div><label>Kayıt limiti</label><input id="l_${u.id}" type="number" value="${u.record_limit||10}" min="1"></div></div><p class="muted">Kullanılan: ${u.records_created||0}</p><button onclick="saveUser('${u.id}')">Güncelle</button></div>`).join('')||'<p class="muted">Henüz kullanıcı yok.</p>'}catch(e){msg('globalMsg',e.message,true)}}
+async function login(){try{const r=await call('loginUser',qs('loginEmail').value,qs('loginPass').value);if(!r||!r.ok)return msg('authMsg',r?.message||'Giriş yapılamadı.',true);TOKEN=r.token;localStorage.setItem('basari_token',TOKEN);USER=r.user;enterApp()}catch(e){msg('authMsg',e.message,true)}}
+async function register(){try{const r=await call('registerUser',qs('regName').value,qs('regEmail').value,qs('regPass').value);msg('authMsg',r?.message||'',!r?.ok);if(r?.ok)showAuth('login')}catch(e){msg('authMsg',e.message,true)}}
+async function logout(){try{await call('logoutUser',TOKEN)}catch(e){}localStorage.removeItem('basari_token');location.reload()}
+function enterApp(){qs('landing').classList.add('hidden');qs('authBox').classList.add('hidden');qs('appBox').classList.remove('hidden');qs('userHead').classList.remove('hidden');qs('headName').textContent=USER.full_name;qs('headPlan').textContent=USER.plan;qs('adminTabBtn').classList.toggle('hidden',USER.role!=='ADMIN');refreshStats();loadRecords()}
+function refreshStats(){qs('statPlan').textContent=USER.plan==='FULL'?'Tam Sürüm':'Deneme';qs('statUsed').textContent=USER.records_created||0;qs('statRemain').textContent=USER.plan==='FULL'?'∞':Math.max(0,(USER.record_limit||0)-(USER.records_created||0));qs('trialInfo').textContent=USER.plan==='TRIAL'&&USER.trial_ends_at?('Deneme bitiş: '+new Date(USER.trial_ends_at).toLocaleString('tr-TR')):''}
+function page(name,btn){document.querySelectorAll('.page').forEach(x=>x.classList.add('hidden'));qs('page-'+name).classList.remove('hidden');document.querySelectorAll('.menu button[data-page]').forEach(x=>x.classList.remove('active'));if(btn)btn.classList.add('active');if(['drafts','approval','archive'].includes(name))renderStatus(name);if(name==='admin')loadAdmin()}
+async function createRecord(){try{const data={tc:qs('fTc').value,ad_soyad:qs('fAd').value,unvan:qs('fUnvan').value,gorev_yeri:qs('fGorev').value,belge_turu:qs('fTur').value,gerekce:qs('fGerekce').value,tarih:qs('fTarih').value,sayi:qs('fSayi').value};if(!data.ad_soyad.trim())return msg('globalMsg','Ad Soyad zorunlu.',true);const r=await call('createRecord',TOKEN,data);msg('globalMsg',r?.message||'',!r?.ok);if(r?.ok){await reloadUser();await loadRecords()}}catch(e){msg('globalMsg',e.message,true)}}
+async function reloadUser(){const r=await call('getSession',TOKEN);if(r?.ok){USER=r.user;refreshStats();qs('headPlan').textContent=USER.plan}}
+async function loadRecords(){try{const r=await call('listRecords',TOKEN);ALL_RECORDS=r?.records||[];renderStatus('drafts');renderStatus('approval');renderStatus('archive')}catch(e){msg('globalMsg',e.message,true)}}
+function rowsTable(rows){if(!rows.length)return '<p class="muted">Kayıt bulunmuyor.</p>';return `<div class="scroll"><table><thead><tr><th>Ad Soyad</th><th>TC</th><th>Ünvan</th><th>Belge</th><th>Tarih / Sayı</th><th>Durum</th></tr></thead><tbody>${rows.map(x=>`<tr><td>${esc(x.ad_soyad)}</td><td>${esc(x.tc)}</td><td>${esc(x.unvan)}</td><td>${x.belge_turu==='USTUN_BASARI'?'Üstün Başarı':'Başarı'}</td><td>${esc(x.tarih)} ${esc(x.sayi)}</td><td>${esc(x.status)}</td></tr>`).join('')}</tbody></table></div>`}
+function renderStatus(name){const map={drafts:['TASLAK'],approval:['OLUR_LISTESINDE'],archive:['TESLIM_EDILDI','IPTAL']};qs(name==='drafts'?'draftRows':name==='approval'?'approvalRows':'archiveRows').innerHTML=rowsTable(ALL_RECORDS.filter(x=>map[name].includes(x.status)))}
+async function loadDrive(){try{const r=await call('getDriveInfo',TOKEN);qs('driveInfo').innerHTML=`<div class="msg">Drive klasörü hazır: <b>${esc(r.folderName)}</b><br><span class="muted">Klasör ID: ${esc(r.folderId)}</span></div>`}catch(e){msg('globalMsg',e.message,true)}}
+async function loadAdmin(){try{const r=await call('getAdminUsers',TOKEN);qs('adminRows').innerHTML=(r.users||[]).filter(u=>u.role!=='ADMIN').map(u=>`<div class="card"><b>${esc(u.full_name)}</b><div class="muted">${esc(u.email)}</div><div class="grid3" style="margin-top:10px"><div><label>Üyelik</label><select id="p_${u.id}"><option ${u.plan==='TRIAL'?'selected':''}>TRIAL</option><option ${u.plan==='FULL'?'selected':''}>FULL</option><option ${u.plan==='BLOCKED'?'selected':''}>BLOCKED</option></select></div><div><label>Deneme günü</label><input id="d_${u.id}" type="number" value="7" min="1"></div><div><label>Kayıt limiti</label><input id="l_${u.id}" type="number" value="${u.record_limit||10}" min="1"></div></div><p class="muted">Kullanılan: ${u.records_created||0}</p><button onclick="saveUser('${u.id}')">Güncelle</button></div>`).join('')||'<p class="muted">Henüz kullanıcı yok.</p>'}catch(e){msg('globalMsg',e.message,true)}}
 async function saveUser(id){try{await call('adminUpdateUser',TOKEN,id,qs('p_'+id).value,Number(qs('d_'+id).value),Number(qs('l_'+id).value),true);msg('globalMsg','Üyelik güncellendi.');loadAdmin()}catch(e){msg('globalMsg',e.message,true)}}
-(async function init(){if(!TOKEN)return;try{let r=await call('getSession',TOKEN);if(r.ok){USER=r.user;enterApp()}else localStorage.removeItem('basari_token')}catch(e){localStorage.removeItem('basari_token')}})();
+(async function init(){if(!TOKEN)return;try{const r=await call('getSession',TOKEN);if(r?.ok){USER=r.user;enterApp()}else localStorage.removeItem('basari_token')}catch(e){localStorage.removeItem('basari_token')}})();
 </script>
-</body>
-</html>
+</body></html>
