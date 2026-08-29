@@ -2,6 +2,7 @@
 (function(){
   let firstRun = false;
   let originalRegister = null;
+  let creating = false;
 
   async function refreshFirstRun(){
     try{
@@ -40,20 +41,33 @@
       if(typeof originalRegister === 'function') return originalRegister();
       return;
     }
+    if(creating) return;
     const fullName = (document.getElementById('regName')||{}).value || '';
     const email = (document.getElementById('regEmail')||{}).value || '';
     const password = (document.getElementById('regPass')||{}).value || '';
     const msg = document.getElementById('authMsg');
+    const btn = document.querySelector('#registerBox button.btn');
+    creating = true;
+    if(btn){btn.disabled=true;btn.textContent='Yönetici hesabı oluşturuluyor...';}
+    if(msg) msg.innerHTML='<div class="msg">İlk yönetici hesabı oluşturuluyor. Lütfen bu pencereyi kapatmayın.</div>';
     try{
       const r = await new Promise((resolve,reject)=>{
         google.script.run.withSuccessHandler(resolve).withFailureHandler(e=>reject(new Error(e && e.message ? e.message : String(e)))).createFirstAdmin(fullName,email,password);
       });
-      if(!r || !r.ok){ if(msg) msg.innerHTML='<div class="msg err">'+((r&&r.message)||'Kurulum tamamlanamadı.')+'</div>'; return; }
+      if(!r || !r.ok){
+        if(msg) msg.innerHTML='<div class="msg err">'+((r&&r.message)||'Kurulum tamamlanamadı.')+'</div>';
+        return;
+      }
       localStorage.setItem('mia_basari_token', r.token);
       firstRun = false;
-      if(msg) msg.innerHTML='<div class="msg">İlk yönetici hesabı oluşturuldu.</div>';
-      setTimeout(()=>location.reload(),500);
-    }catch(e){ if(msg) msg.innerHTML='<div class="msg err">'+e.message+'</div>'; }
+      if(msg) msg.innerHTML='<div class="msg">Yönetici hesabı oluşturuldu. Uygulama açılıyor...</div>';
+      setTimeout(()=>location.reload(),700);
+    }catch(e){
+      if(msg) msg.innerHTML='<div class="msg err">'+e.message+'</div>';
+    }finally{
+      creating=false;
+      if(btn){btn.disabled=false;btn.textContent=firstRun?'Yönetici Hesabını Oluştur':'Tamamlandı';}
+    }
   };
 })();
 </script>
