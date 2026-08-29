@@ -1,0 +1,95 @@
+KAMU KURUMLARI BAŞARI BELGELERİ - ÜYELİKLİ TAM WEB SÜRÜMÜ
+
+BU PAKET NE YAPIYOR?
+- Programın tam arayüzü webde çalışır.
+- Kullanıcı e-posta/parola ile üye olur.
+- Yeni kullanıcı otomatik DENEME hesabı alır (varsayılan: 7 gün / 10 yeni kayıt).
+- Her kullanıcının veritabanı, fotoğrafları, imzaları ve ayarları birbirinden ayrıdır.
+- Yönetici; kullanıcıyı Tam Sürüm yapabilir, deneme gününü/kayıt limitini değiştirebilir veya engelleyebilir.
+- Google Sites uygulamanın vitrini olur; asıl uygulama Railway üzerinde çalışır.
+
+1. GITHUB DEPOSU OLUŞTUR
+1) github.com'a gir.
+2) Sağ üst + > New repository.
+3) Ad: kamu-basari-belgeleri-web
+4) İstersen Private seç.
+5) Create repository.
+6) Bu ZIP'i bilgisayarında aç.
+7) ZIP içindeki DOSYA ve KLASÖRLERİN TAMAMINI GitHub deposunun köküne yükle. ZIP dosyasının kendisini yükleme.
+8) Commit changes de.
+
+2. RAILWAY'DE YAYINLA
+1) railway.com'a gir ve GitHub hesabınla giriş yap.
+2) New Project seç.
+3) Deploy from GitHub repo seç.
+4) kamu-basari-belgeleri-web deposunu seç.
+5) Railway kökteki Dockerfile'ı görüp otomatik derlemeye başlayacak.
+
+3. KALICI VERİ DİSKİ EKLE - ZORUNLU
+1) Railway proje ekranında oluşturulan servis kutusuna tıkla.
+2) Volume / Add Volume seç.
+3) Mount Path alanına TAM olarak: /data yaz.
+4) Kaydet.
+ÖNEMLİ: /data volume olmadan kullanıcılar ve kayıtlar yeniden dağıtımda kaybolabilir.
+
+4. YÖNETİCİ VE DENEME AYARLARINI GİR
+Railway > servis > Variables bölümüne gir ve şunları ekle:
+
+BASARI_WEB_MODE = 1
+WEB_DATA_ROOT = /data
+WEB_ADMIN_EMAIL = kendi e-posta adresin
+WEB_ADMIN_PASSWORD = güçlü bir yönetici parolası
+WEB_TRIAL_DAYS = 7
+WEB_TRIAL_RECORD_LIMIT = 10
+WEB_SESSION_DAYS = 7
+
+Değişkenleri kaydedip Redeploy/Deploy yap.
+
+5. UYGULAMA ADRESİNİ AL
+1) Railway > servis > Settings > Networking bölümüne gir.
+2) Generate Domain seç.
+3) Railway sana https://....up.railway.app benzeri bir adres verir.
+4) Bu adresi yeni sekmede aç.
+5) Giriş Yap / Üye Ol ekranını görmelisin.
+6) WEB_ADMIN_EMAIL ve WEB_ADMIN_PASSWORD değerleriyle giriş yaparsan yönetici hesabına girersin.
+
+6. DENEME ÜYESİNİ TEST ET
+1) Tarayıcıda gizli sekme aç.
+2) Railway adresine gir.
+3) Üye Ol / Deneme Başlat bölümünden farklı bir e-posta ile hesap aç.
+4) Giriş yap.
+5) Kamu Kurumları Başarı Belgeleri programının TAM arayüzü açılır.
+6) Kullanıcı varsayılan olarak 7 gün / 10 yeni kayıt hakkına sahiptir.
+7) PDF, şablon, kayıt, arama vb. program özellikleri kullanıcıya açıktır; yeni kayıt üretimi deneme limitiyle sınırlandırılır.
+
+7. ÜYEYİ TAM SÜRÜM YAP
+1) Kendi yönetici hesabınla giriş yap.
+2) Sol kenar çubuğunda Üye Yönetimi bölümünü aç.
+3) Kullanıcıyı seç.
+4) Üyelik alanını FULL yap ve Üyeliği Güncelle de.
+5) İstersen TRIAL seçip gün ve kayıt limitini değiştirebilir veya BLOCKED ile engelleyebilirsin.
+
+8. GOOGLE SITES'E YERLEŞTİR
+1) sites.google.com adresinde siteni düzenlemeye aç.
+2) Sağ tarafta Ekle > Yerleştir (Embed) seç.
+3) URL bölümüne Railway adresini yapıştır.
+4) Ekle de.
+5) Oluşan uygulama alanını sayfada mümkün olduğunca geniş ve yüksek yap.
+6) Yayınla.
+7) Yayınlanan Google Sites adresini gizli sekmede aç ve üyelik/giriş/kayıt testini yap.
+
+VERİ GÜVENLİĞİ / AYRIM
+- Her kullanıcı /data/users/<benzersiz-kullanici-id> altında kendi çalışma alanına sahiptir.
+- Kullanıcılar birbirlerinin kayıtlarını, fotoğraflarını ve ayarlarını görmez.
+- Gerçek mevcut kurum veritabanı ve gerçek personel fotoğrafları BU PAKETE KONULMAMIŞTIR.
+- Her kullanıcı kendi kurum, amir, imza ve belge ayarını kendi hesabında yapar.
+
+İLK TESTTE KONTROL EDİLECEKLER
+1) Üye olma
+2) Giriş yapma
+3) 1 adet kayıt oluşturma
+4) PDF üretme
+5) Çıkış / tekrar giriş
+6) Kaydın hâlâ durması
+7) Yönetici hesabından üyeyi FULL yapma
+8) Google Sites içinden dosya yükleme ve PDF indirme
