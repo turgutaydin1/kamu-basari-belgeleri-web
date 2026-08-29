@@ -1,0 +1,102 @@
+<script>
+(function(){
+  let booting=false;
+  let lastVisibleAt=Date.now();
+
+  function ensureLoadingBox(){
+    if(document.getElementById('appLoadingOverlay')) return;
+    const d=document.createElement('div');
+    d.id='appLoadingOverlay';
+    d.className='hidden';
+    d.style.cssText='position:fixed;inset:0;z-index:9999;background:rgba(244,247,250,.94);display:flex;align-items:center;justify-content:center;font-family:Segoe UI,Arial,sans-serif;color:#173a5e';
+    d.innerHTML='<div style="background:#fff;border:1px solid #d7e0e8;border-radius:14px;padding:22px 28px;box-shadow:0 15px 40px rgba(20,45,70,.14);font-weight:700">Sistem hazırlanıyor...</div>';
+    document.body.appendChild(d);
+  }
+  function loading(on,text){
+    ensureLoadingBox();
+    const d=document.getElementById('appLoadingOverlay');
+    if(text) d.firstElementChild.textContent=text;
+    d.classList.toggle('hidden',!on);
+  }
+
+  window.enterApp = async function(){
+    if(booting) return;
+    booting=true;
+    loading(true,'Sistem hazırlanıyor...');
+    try{
+      if(!TOKEN) throw new Error('Oturum bulunamadı.');
+      if(!USER){
+        const s=failIf(await api('getSession',TOKEN));
+        USER=s.user;
+      }
+      $('landing').classList.add('hidden');
+      $('application').classList.remove('hidden');
+      $('userName').textContent=USER.full_name||USER.email;
+      $('userPlan').textContent=USER.plan==='FULL'?'Tam Sürüm':'Demo';
+      $('adminShortcut').classList.toggle('hidden',USER.role!=='ADMIN');
+      await Promise.all([loadSettingsAll(),loadDashboard()]);
+      document.querySelectorAll('.page').forEach(x=>x.classList.add('hidden'));
+      const home=$('page-home'); if(home) home.classList.remove('hidden');
+      document.querySelectorAll('.menu button').forEach(x=>x.classList.remove('active'));
+      const hb=document.querySelector('.menu button[data-page="home"]'); if(hb) hb.classList.add('active');
+    }catch(e){
+      console.error('enterApp',e);
+      const hasToken=!!TOKEN;
+      if(!hasToken){
+        $('landing').classList.remove('hidden');
+        $('application').classList.add('hidden');
+      }else{
+        $('landing').classList.add('hidden');
+        $('application').classList.remove('hidden');
+        const gm=$('globalMsg');
+        if(gm) gm.innerHTML='<div class="msg err">Bağlantı yenileniyor. Birkaç saniye içinde tekrar deneyin.</div>';
+      }
+    }finally{
+      booting=false;
+      loading(false);
+    }
+  };
+
+  async function recoverVisibleApp(){
+    if(document.visibilityState!=='visible') return;
+    lastVisibleAt=Date.now();
+    try{
+      document.documentElement.style.visibility='visible';
+      document.body.style.visibility='visible';
+      document.body.style.opacity='1';
+      if(!TOKEN) return;
+      const app=$('application');
+      const landing=$('landing');
+      const noVisiblePage=[...document.querySelectorAll('.page')].every(p=>p.classList.contains('hidden'));
+      if(!app || app.classList.contains('hidden')){
+        USER=null;
+        await enterApp();
+        return;
+      }
+      if(landing && !landing.classList.contains('hidden')) landing.classList.add('hidden');
+      if(noVisiblePage){
+        const home=$('page-home'); if(home) home.classList.remove('hidden');
+      }
+      // Chrome/Apps Script iframe yeniden çizim problemi için tek karelik repaint.
+      document.body.style.transform='translateZ(0)';
+      requestAnimationFrame(()=>{document.body.style.transform='';});
+    }catch(e){console.error('recoverVisibleApp',e);}
+  }
+
+  window.addEventListener('pageshow',()=>setTimeout(recoverVisibleApp,50));
+  document.addEventListener('visibilitychange',()=>{
+    if(document.visibilityState==='visible') setTimeout(recoverVisibleApp,120);
+  });
+  window.addEventListener('focus',()=>setTimeout(recoverVisibleApp,80));
+
+  window.addEventListener('load',()=>{
+    ensureLoadingBox();
+    if(TOKEN){
+      setTimeout(()=>{
+        const app=$('application');
+        if(app && app.classList.contains('hidden')) enterApp();
+      },150);
+    }
+  });
+})();
+</script>
