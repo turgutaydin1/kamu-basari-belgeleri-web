@@ -1,0 +1,167 @@
+<!--
+  ANA PROJE VİTRİNİ — SABİT MİMARİ
+  Bu alan tek bir ürünün landing page'i değildir.
+  Başarı Belgeleri dahil tüm projeler burada kartlar halinde tanıtılır.
+  Bu yapıyı tek-proje tanıtımına çevirmeyin.
+-->
+<div id="landing" class="portfolioLanding">
+  <header class="portfolioTop">
+    <div class="portfolioTopIn">
+      <div class="portfolioBrand">
+        <div class="portfolioLogo">TA</div>
+        <div>
+          <strong>Kurumsal Yazılım Çözümleri</strong>
+          <span>Kamu kurumları ve kurumsal süreçler için özel yazılımlar</span>
+        </div>
+      </div>
+      <nav class="portfolioNav">
+        <a href="#projeler">Projeler</a>
+        <a href="#yaklasim">Yaklaşım</a>
+        <a href="#iletisim">Demo</a>
+        <button class="btn secondary" onclick="openAuth('login')">Üye Girişi</button>
+      </nav>
+    </div>
+  </header>
+
+  <section class="portfolioHero">
+    <div class="portfolioHeroIn">
+      <div class="portfolioHeroCopy">
+        <span class="portfolioEyebrow">SÜREÇ ODAKLI • KURUMA ÖZEL • GELİŞTİRİLEBİLİR</span>
+        <h1>Gerçek iş süreçlerinden doğan kurumsal yazılım projeleri</h1>
+        <p>Hazır kalıp yazılımlar yerine, kurumların gerçek iş akışlarını esas alan uygulamalar geliştiriyoruz. Aşağıdaki projeler farklı operasyonel ihtiyaçlara çözüm üretir; her proje kendi tanıtım, demo ve üyelik akışına sahiptir.</p>
+        <div class="portfolioHeroActions">
+          <a class="btn" href="#projeler">Projeleri İncele</a>
+          <button class="btn secondary" onclick="openAuth('login')">Üye Girişi</button>
+        </div>
+        <div class="portfolioTrust">
+          <span>✓ Gerçek kurum süreçleri</span>
+          <span>✓ Masaüstü + web geçişine uygun</span>
+          <span>✓ Modüler ve taşınabilir mimari</span>
+        </div>
+      </div>
+      <div class="portfolioHeroPanel">
+        <div class="portfolioHeroPanelTop"><span class="liveDot"></span><b>Proje Portföyü</b><span class="pill">Canlı</span></div>
+        <div class="portfolioMetricGrid">
+          <div class="portfolioMetric"><strong>3+</strong><span>Kurumsal proje</span></div>
+          <div class="portfolioMetric"><strong>1</strong><span>Aktif web demo</span></div>
+          <div class="portfolioMetric"><strong>Web</strong><span>Google Apps Script</span></div>
+          <div class="portfolioMetric"><strong>Host</strong><span>PHP/MySQL'e hazır yön</span></div>
+        </div>
+        <div class="portfolioFlow">
+          <div><b>01</b><span>Projeyi incele</span></div>
+          <div><b>02</b><span>Demo hesabı aç</span></div>
+          <div><b>03</b><span>Gerçek sistemi kullan</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projeler" class="portfolioSection">
+    <div class="portfolioSectionHead">
+      <span class="portfolioEyebrow">PROJELER</span>
+      <h2>Geliştirilen yazılım çözümleri</h2>
+      <p>Başarı Belgeleri bu portföyün yalnızca bir ürünüdür. Yeni projeler aynı vitrinde bağımsız ürün kartları olarak eklenecektir.</p>
+    </div>
+
+    <div class="projectGrid">
+      <article class="projectCard projectCardActive">
+        <div class="projectCardTop">
+          <span class="projectIcon">🏅</span>
+          <span class="projectStatus active">Demo Aktif</span>
+        </div>
+        <h3>Kamu Kurumları Başarı Belgeleri</h3>
+        <p>Başarı ve Üstün Başarı Belgelerinin kayıt, Olur, PDF, imza, tarih-sayı, arşiv ve toplu işlem süreçlerini yöneten sistem.</p>
+        <div class="projectTags"><span>Belge Yönetimi</span><span>PDF</span><span>Olur Süreci</span><span>Arşiv</span></div>
+        <div class="projectActions">
+          <button class="btn" onclick="openProjectDetail('basari')">Projeyi İncele</button>
+          <button class="btn secondary" onclick="openAuth('register')">Demoyu Dene</button>
+        </div>
+      </article>
+
+      <article class="projectCard">
+        <div class="projectCardTop">
+          <span class="projectIcon">🚪</span>
+          <span class="projectStatus">Yakında</span>
+        </div>
+        <h3>Havaalanı Geçiş İzin Yönetim Sistemi</h3>
+        <p>Şahıs ve araç geçiş izinleri, anonim kartlar, kapı yetkileri, hareket takibi ve yönetim süreçleri için geliştirilen kapsamlı sistem.</p>
+        <div class="projectTags"><span>Yetki Yönetimi</span><span>Kart Takibi</span><span>Araç İzinleri</span></div>
+        <div class="projectActions"><button class="btn secondary" disabled>Demo Hazırlanıyor</button></div>
+      </article>
+
+      <article class="projectCard">
+        <div class="projectCardTop">
+          <span class="projectIcon">🔎</span>
+          <span class="projectStatus">Yakında</span>
+        </div>
+        <h3>İstanbul Havalimanı Hanut Takip Sistemi</h3>
+        <p>Kişi ve firma bazlı takip, kural eşikleri, uyarılar, gelişmiş sorgulama, işlem geçmişi ve yönetim raporlaması için geliştirilen sistem.</p>
+        <div class="projectTags"><span>Takip</span><span>Uyarı Kuralları</span><span>Raporlama</span></div>
+        <div class="projectActions"><button class="btn secondary" disabled>Demo Hazırlanıyor</button></div>
+      </article>
+
+      <article class="projectCard projectCardPlaceholder">
+        <div class="projectCardTop"><span class="projectIcon">＋</span><span class="projectStatus">Genişleyebilir</span></div>
+        <h3>Yeni Projeler</h3>
+        <p>Yeni geliştirilen uygulamalar mevcut ana vitrinin yapısı değiştirilmeden bu alana yeni kartlar halinde eklenecek.</p>
+        <div class="projectTags"><span>Yeni Ürün</span><span>Yeni Demo</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section id="yaklasim" class="portfolioApproach">
+    <div class="portfolioSection">
+      <div class="portfolioSectionHead light">
+        <span class="portfolioEyebrow">YAKLAŞIM</span>
+        <h2>Programı iş akışına uyduruyoruz</h2>
+        <p>Her proje, gerçek kullanıcı işlemleri ve kurum kuralları üzerinden şekillenir.</p>
+      </div>
+      <div class="approachGrid">
+        <div class="approachItem"><b>01</b><strong>Gerçek Süreç</strong><span>Mevcut işleyiş, formlar ve karar kuralları analiz edilir.</span></div>
+        <div class="approachItem"><b>02</b><strong>Birebir İş Mantığı</strong><span>Çalışan sistemin kuralları web sürümünde korunur.</span></div>
+        <div class="approachItem"><b>03</b><strong>Taşınabilir Mimari</strong><span>Bugünkü Google altyapısından gelecekteki normal hosta geçiş gözetilir.</span></div>
+        <div class="approachItem"><b>04</b><strong>Sürekli Gelişim</strong><span>Yeni ihtiyaçlar mevcut sistemi bozmadan modüler şekilde eklenir.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="iletisim" class="portfolioSection">
+    <div class="portfolioCta">
+      <div>
+        <span class="portfolioEyebrow">CANLI DEMO</span>
+        <h2>Başarı Belgeleri sistemini şimdi deneyin</h2>
+        <p>Aktif demo şu anda Başarı Belgeleri projesi için kullanılabilir. Diğer projeler hazır oldukça aynı ana vitrinde etkinleştirilecek.</p>
+      </div>
+      <div class="portfolioCtaActions">
+        <button class="btn" onclick="openAuth('register')">Demoyu Dene</button>
+        <button class="btn secondary" onclick="openAuth('login')">Üye Girişi</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="portfolioFooter">
+    <div><b>Kurumsal Yazılım Çözümleri</b><span>Gerçek süreçler için geliştirilen uygulamalar</span></div>
+    <div>Proje vitrini • Demo • Üyelik • Uygulama</div>
+  </footer>
+</div>
+
+<!-- Başarı Belgeleri proje detay penceresi -->
+<div id="projectDetailModal" class="modalbg hidden">
+  <div class="modal wide">
+    <div class="sectionTitle"><h2>Kamu Kurumları Başarı Belgeleri</h2><button class="btn secondary" onclick="closeProjectDetail()">✕</button></div>
+    <p>Başarı ve Üstün Başarı Belgelerinin kurum içindeki gerçek iş akışını dijital ortamda yöneten kapsamlı belge düzenleme ve takip sistemidir.</p>
+    <div class="projectDetailGrid">
+      <div><b>Yeni Belge Kaydı</b><span>Personel, fotoğraf, gerekçe, taltif ve imza bilgileri.</span></div>
+      <div><b>Excel Toplu Aktarım</b><span>Kontrollü toplu kayıt ve hata önizleme.</span></div>
+      <div><b>Taslak / Olur</b><span>Kontrollü durum geçişleri ve Olur grupları.</span></div>
+      <div><b>PDF / Tarih / Sayı</b><span>Dört gerçek şablon ve resmî numaralandırma.</span></div>
+      <div><b>Üstün Başarı</b><span>Üç geçerli Başarı Belgesi dayanağı.</span></div>
+      <div><b>Arşiv / Toplu İşlemler</b><span>PDF, yedekleme, fotoğraf eşleştirme ve diğer işlemler.</span></div>
+    </div>
+    <div class="toolbar" style="margin-top:18px"><button class="btn" onclick="closeProjectDetail();openAuth('register')">Demoyu Dene</button><button class="btn secondary" onclick="closeProjectDetail();openAuth('login')">Üye Girişi</button></div>
+  </div>
+</div>
+<script>
+function openProjectDetail(projectId){if(projectId==='basari')document.getElementById('projectDetailModal').classList.remove('hidden');}
+function closeProjectDetail(){document.getElementById('projectDetailModal').classList.add('hidden');}
+</script>
