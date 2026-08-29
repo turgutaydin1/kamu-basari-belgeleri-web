@@ -1,25 +1,37 @@
-# Kamu Kurumları Başarı Belgeleri — Web Sürümü
+# Kamu Kurumları Başarı Belgeleri — Google Sites / Apps Script
 
-Bu depo, üyelik ve kısıtlı deneme sistemi bulunan web sürümünü içerir.
+Bu depo artık **ücretli sunucu gerektirmeyen Google-only web düzenini** içerir.
 
-## Dağıtım modeli
+## Kullanılan servisler
+- Google Sites — vitrin / gömme sayfası
+- Google Apps Script — web uygulaması ve üyelik mantığı
+- Google Sheets — kullanıcı ve kayıt verileri
+- Google Drive — kullanıcıya özel dosya alanları
+- GitHub — kaynak kod deposu
 
-- Google hesabı ile Google Cloud Compute Engine
-- Docker ile uygulama çalıştırma
-- Kalıcı kullanıcı verileri: `/opt/basari-data`
-- HTTPS: Caddy
-- Google Sites: uygulamayı sayfa içine gömme
-- GitHub yalnız kaynak kod deposudur; kullanıcı verileri GitHub'a yazılmaz.
+Yeni Railway, Google Cloud VM veya başka bir hosting hesabı gerekmez.
 
-## Üyelik
+## Üyelik sistemi
+Yeni kullanıcı varsayılan olarak:
+- 7 gün
+- 10 yeni kayıt
 
-Yeni kullanıcı varsayılan olarak `TRIAL` hesabı açar. Varsayılan sınır 7 gün / 10 yeni kayıttır. Yönetici kullanıcıyı `TRIAL`, `FULL` veya `BLOCKED` yapabilir.
+ile `TRIAL` hesabı açar.
 
-## Kurulum
+Yönetici kullanıcıyı `TRIAL`, `FULL` veya `BLOCKED` yapabilir; deneme günü ve kayıt limitini değiştirebilir.
 
-Ayrıntılı ve adım adım anlatım için:
+## Kullanılacak dosyalar
+Google Sites'te çalışacak yeni sürüm:
+- `apps-script/Code.gs`
+- `apps-script/Index.html`
+- `apps-script/appsscript.json`
 
-- `GOOGLE_CLOUD_KURULUM.md`
+Kurulum:
+- `apps-script/KURULUM.md`
 - `ADIM_ADIM_KURULUM.txt`
 
-Railway kullanılmaz.
+## Eski Python sürümü
+Kök dizindeki `app.py`, `web_auth.py`, `requirements.txt` ve ilgili dosyalar eski Streamlit sürümünün kaynak referansı olarak şimdilik korunmaktadır. Google Sites üzerinde bunlar çalıştırılmaz.
+
+## Önemli not
+Google Apps Script ücretsiz kullanım kotalarına tabidir. Bu mimari kısıtlı demo ve düşük/orta hacimli kullanım için uygundur. Çok yüksek eşzamanlı kullanıcı veya yoğun dosya/PDF işleme ihtiyacı olursa ileride sunucu mimarisi ayrıca değerlendirilir.
