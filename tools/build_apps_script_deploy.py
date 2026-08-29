@@ -40,10 +40,11 @@ core = (SRC / 'ClientCore.html').read_text(encoding='utf-8')
 pdf = (SRC / 'ClientPdf.html').read_text(encoding='utf-8')
 parity = (SRC / 'ClientParity.html').read_text(encoding='utf-8')
 setup = (SRC / 'ClientSetup.html').read_text(encoding='utf-8')
+lifecycle = (SRC / 'ClientLifecycle.html').read_text(encoding='utf-8')
 
 index = index.replace("<?!= include('Styles'); ?>", styles)
 index = index.replace("<?!= include('ClientCore'); ?>", core)
-index = index.replace("<?!= include('ClientPdf'); ?>", pdf + '\n' + parity + '\n' + setup)
+index = index.replace("<?!= include('ClientPdf'); ?>", pdf + '\n' + parity + '\n' + setup + '\n' + lifecycle)
 if '<?!=' in index:
     raise SystemExit('Unresolved Apps Script include remains in deployment Index.html')
 (OUT / 'Index.html').write_text(index, encoding='utf-8')
