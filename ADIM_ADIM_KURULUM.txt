@@ -1,79 +1,84 @@
-KAMU KURUMLARI BAŞARI BELGELERİ - GOOGLE SITES + APPS SCRIPT KURULUMU
+KAMU KURUMLARI BAŞARI BELGELERİ - GERÇEK WEB DEMO YAPISI
 
-BU SÜRÜMDE:
-- Railway yok.
-- Google Cloud VM yok.
-- Docker yok.
-- Yeni hosting hesabı yok.
-- Mevcut Google ve GitHub hesabın yeterli.
+ÖNEMLİ:
+Bu projede artık Google Apps Script ile hazırlanmış sadeleştirilmiş Başarı Belgeleri kopyası kullanılmıyor.
 
-KULLANILANLAR:
-Google Sites + Google Apps Script + Google Sheets + Google Drive + GitHub
+Amaç:
+Tanıtım Sayfası > Demoyu Dene > Üyelik > MASAÜSTÜNDEKİ ORİJİNAL BAŞARI BELGELERİ SİSTEMİ
 
-KISA KURULUM:
+DOSYALAR:
 
-1) https://script.google.com adresine mevcut Google hesabınla gir.
-2) Yeni proje oluştur. Ad: Kamu Başarı Belgeleri Web
-3) GitHub deposunda apps-script/Code.gs dosyasını aç.
-4) Apps Script'teki Code.gs içeriğini tamamen sil ve GitHub'daki Code.gs içeriğini yapıştır.
-5) Apps Script sol taraf + > HTML seç. Dosya adı: Index
-6) GitHub'daki apps-script/Index.html içeriğini buraya yapıştır.
-7) Apps Script > Proje Ayarları > appsscript.json manifestini göster seçeneğini aç.
-8) appsscript.json dosyasını GitHub'daki apps-script/appsscript.json içeriğiyle değiştir.
+1) app.py
+   Orijinal, tam ve çalışan Başarı Belgeleri sistemidir.
+   Web demosunda yeniden yazılmış başka bir program kullanılmaz.
 
-İLK KURULUM:
-9) Code.gs dosyasının EN ALTINA geçici olarak şunu ekle:
+2) web_auth.py
+   Tanıtım sayfası, üyelik, giriş, 7 gün/10 kayıt demo sınırı, yönetici üyelik işlemleri ve kullanıcıya özel çalışma alanını yönetir.
 
-function ilkKurulum() {
-  setupSystem('KENDI_EPOSTA_ADRESIN');
-}
+3) web_app.py
+   Web sürümünün giriş dosyasıdır.
+   BASARI_WEB_MODE=1 yaparak doğrudan app.py'yi çalıştırır.
 
-10) KENDI_EPOSTA_ADRESIN yerine kendi Gmail/Google e-posta adresini yaz.
-11) Üst fonksiyon listesinden ilkKurulum seç ve Çalıştır de.
-12) Google izin isterse Sheets ve Drive erişimine izin ver.
-13) Google Drive'da otomatik olarak şu iki şey oluşur:
-    - Kamu Başarı Belgeleri - Sistem Veritabanı
-    - Kamu Başarı Belgeleri - Kullanıcı Verileri
+4) requirements.txt
+   Gerekli Python paketlerini içerir.
 
-WEB UYGULAMASINI YAYINLA:
-14) Apps Script sağ üst > Dağıt > Yeni dağıtım.
-15) Tür: Web uygulaması.
-16) Şu kullanıcı olarak çalıştır: Ben.
-17) Erişimi olanlar: Herkes.
-18) Dağıt de.
-19) Sana verilen https://script.google.com/macros/s/.../exec adresini kopyala.
+ÇALIŞTIRMA:
 
-YÖNETİCİ HESABI:
-20) /exec adresini aç.
-21) Kendi e-posta adresinle Üye Ol kısmından kayıt aç ve parolanı belirle.
-22) Apps Script editörüne dön, ilkKurulum fonksiyonunu bir kez daha Çalıştır.
-23) Hesabın ADMIN + FULL olur.
+streamlit run web_app.py
 
-DENEME TESTİ:
-24) Gizli sekme aç.
-25) /exec adresine gir.
-26) Farklı e-posta ile Üye Ol.
-27) Giriş yap.
-28) Varsayılan sınır 7 gün / 10 kayıttır.
-29) Yeni belge kaydı oluştur.
-30) Kayıtlar bölümünde kaydın durduğunu kontrol et.
-31) Çıkış yap ve tekrar giriş yap; kayıt kalıcı olmalıdır.
+ORTAM DEĞİŞKENLERİ:
 
-ÜYE YÖNETİMİ:
-32) Kendi yönetici hesabınla giriş yap.
-33) Üye Yönetimi sekmesini aç.
-34) Kullanıcıyı TRIAL, FULL veya BLOCKED yapabilirsin.
-35) Deneme gününü ve kayıt limitini değiştirebilirsin.
+WEB_DATA_ROOT=/data
+WEB_TRIAL_DAYS=7
+WEB_TRIAL_RECORD_LIMIT=10
+WEB_SESSION_DAYS=7
+WEB_ADMIN_EMAIL=yonetici_eposta
+WEB_ADMIN_PASSWORD=guclu_parola
 
-GOOGLE SITES'E GÖMME:
-36) https://sites.google.com adresinde siteni aç.
-37) Sağ panel > Ekle > Yerleştir.
-38) URL olarak Apps Script /exec adresini yapıştır.
-39) Ekle de.
-40) Uygulama alanını genişlet ve siteyi yayınla.
+VERİ SAKLAMA:
 
-DAHA DETAYLI ANLATIM:
-apps-script/KURULUM.md
+Her demo/üye hesabına ayrı çalışma klasörü açılır.
+Orijinal app.py o kullanıcının kendi klasöründe çalışır.
+Böylece üyelerin:
+- veritabanı
+- fotoğrafları
+- imzaları
+- belgeleri
+- şablonları
+- yedekleri
+birbirine karışmaz.
 
-NOT:
-Bu yapı ücretsiz Google Apps Script/Sheets/Drive kotalarına tabidir. Kısıtlı demo ve düşük/orta hacimli kullanım için uygundur. Çok yüksek yoğunlukta kullanımda günlük Google kotaları sınırlayıcı olabilir.
+Sunucuda /data klasörü MUTLAKA kalıcı disk/volume üzerinde tutulmalıdır.
+Geçici dosya sistemi kullanılan bir yayında üyelik ve kayıtların kalıcılığı garanti edilemez.
+
+DEMO:
+
+Yeni üye varsayılan olarak:
+- 7 gün
+- 10 yeni kayıt
+ile açılır.
+
+Bu sınırlama programı basitleştirmez. Kullanıcı giriş yaptıktan sonra app.py'deki gerçek sistem açılır ve orijinal özellikleri kullanır:
+- Yeni Belge Kaydı
+- Başarı / Üstün Başarı
+- Fotoğraf
+- İmza
+- Excel toplu kayıt
+- Taslak Kayıtlar
+- Olur Listesindeki Kayıtlar
+- Toplu İşlemler
+- Kesinleştirme / tarih-sayı süreci
+- PDF üretimi
+- Belge Arşivi
+- Sistem Ayarları
+- Yedekleme ve Dışa Aktarım
+
+GOOGLE SITES:
+
+Google Sites vitrin/portal olarak kullanılabilir.
+Gerçek Başarı Belgeleri uygulaması Python/Streamlit çalıştırabilen bir web sunucusunda yayınlanmalıdır.
+Yayınlanan web adresi Google Sites'e bağlantı olarak verilebilir veya gömme destekleniyorsa sayfaya yerleştirilebilir.
+
+SONRAKİ ADIM:
+
+GitHub tarafındaki program yapısı hazırlandıktan sonra web_app.py kalıcı /data alanı bulunan bir sunucuya yayınlanır.
