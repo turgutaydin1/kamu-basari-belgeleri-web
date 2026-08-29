@@ -1,0 +1,9 @@
+# Apps Script Dağıtım Paketi
+
+Bu klasör otomatik üretilir. Google Apps Script'e yalnız şu dosyaları aktarın:
+
+- `Code.gs`
+- `Index.html`
+- gerekirse `appsscript.json`
+
+Geliştirme kaynakları `apps-script/` klasöründedir. Bu klasördeki dosyaları elle düzenlemeyin.
