@@ -12,10 +12,10 @@ function getFirstRunState() {
 function createFirstAdmin(fullName, email, password) {
   ensureSystem_();
   const lock = LockService.getScriptLock();
-  lock.waitLock(30000);
+  lock.waitLock(15000);
   try {
     const existingAdmin = rows_('users').find(r => String(r.role || '').toUpperCase() === 'ADMIN' && truthy_(r.active));
-    if (existingAdmin) return fail_('İlk kurulum daha önce tamamlanmış.');
+    if (existingAdmin) return fail_('İlk kurulum daha önce tamamlanmış. Üye Girişi ile giriş yapın.');
 
     fullName = clean_(fullName);
     email = clean_(email).toLowerCase();
@@ -40,9 +40,6 @@ function createFirstAdmin(fullName, email, password) {
         record_limit:0,
         records_created:0
       });
-      ensureUserFolders_(id,email);
-      seedConfig_(id);
-      audit_(id,'FIRST_ADMIN_CREATED','',email);
       user = findOne_('users', r => String(r.id) === String(id));
     } else {
       updateById_('users', user.id, {
@@ -54,12 +51,11 @@ function createFirstAdmin(fullName, email, password) {
         trial_ends_at:'',
         record_limit:0
       });
-      ensureUserFolders_(user.id,email);
-      seedConfig_(user.id);
-      audit_(user.id,'FIRST_ADMIN_PROMOTED','',email);
       user = findOne_('users', r => String(r.id) === String(user.id));
     }
 
+    // Ağır Drive klasörü / varsayılan ayar kurulumları burada bekletilmez.
+    // İlgili ekran veya dosya işlemi ilk kez açıldığında mevcut lazy yardımcılar bunları oluşturur.
     const token = uuid_() + uuid_();
     append_('sessions', {
       token:token,
@@ -69,6 +65,6 @@ function createFirstAdmin(fullName, email, password) {
     });
     return {ok:true, token:token, user:safeUser_(user), message:'İlk yönetici hesabı oluşturuldu.'};
   } finally {
-    lock.releaseLock();
+    try { lock.releaseLock(); } catch(e) {}
   }
 }
