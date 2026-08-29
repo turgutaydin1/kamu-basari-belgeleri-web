@@ -1,0 +1,113 @@
+<script>
+/* Masaüstü ile kalan davranış eşitlikleri. */
+
+const _baseRenderSettings = window.renderSettings;
+window.renderSettings = function(){
+  _baseRenderSettings();
+  injectApprovalSettingsUi();
+};
+
+async function injectApprovalSettingsUi(){
+  try{
+    const r=failIf(await api('getApprovalLetterSettingsWeb',TOKEN));
+    const b=r.settings.BASARI||{},u=r.settings.USTUN_BASARI||{};
+    let box=$('approvalSettingsParity');
+    if(!box){
+      box=document.createElement('div');box.id='approvalSettingsParity';box.className='subpanel';box.style.marginTop='14px';
+      $('settings-documents').appendChild(box);
+    }
+    box.innerHTML=`<h3>Olur Yazısı Bilgileri</h3><div class="grid2">
+      <div><h4>Başarı Belgesi</h4><label class="inlineCheck"><input id="apprUseB" type="checkbox" ${b.use_approval_letter_info?'checked':''}> Olur Yazısı Bilgilerini Kullan</label><label>2. Sayfa Başlığı</label><input id="apprHeadingB" value="${esc(b.approval_letter_heading||'')}"><label>Sayı Ön Eki / Formatı</label><input id="apprPrefixB" value="${esc(b.approval_letter_number_prefix||'')}" placeholder="Örn. E-1174148-000-951-15-"></div>
+      <div><h4>Üstün Başarı Belgesi</h4><label class="inlineCheck"><input id="apprUseU" type="checkbox" ${u.use_approval_letter_info?'checked':''}> Olur Yazısı Bilgilerini Kullan</label><label>2. Sayfa Başlığı</label><input id="apprHeadingU" value="${esc(u.approval_letter_heading||'')}"><label>Sayı Ön Eki / Formatı</label><input id="apprPrefixU" value="${esc(u.approval_letter_number_prefix||'')}" placeholder="Örn. E-1174148-000-951-15-"></div>
+    </div><br><button class="btn green" onclick="saveApprovalSettingsUi()">Olur Yazısı Ayarlarını Kaydet</button>`;
+  }catch(e){}
+}
+
+async function saveApprovalSettingsUi(){
+  try{
+    failIf(await api('saveApprovalLetterSettingsWeb',TOKEN,'BASARI',{use_approval_letter_info:$('apprUseB').checked,approval_letter_heading:$('apprHeadingB').value,approval_letter_number_prefix:$('apprPrefixB').value}));
+    failIf(await api('saveApprovalLetterSettingsWeb',TOKEN,'USTUN_BASARI',{use_approval_letter_info:$('apprUseU').checked,approval_letter_heading:$('apprHeadingU').value,approval_letter_number_prefix:$('apprPrefixU').value}));
+    msg('Olur Yazısı ayarları kaydedildi.');
+  }catch(e){msg(e.message,true)}
+}
+
+const _baseSaveDocumentSettingsUi = window.saveDocumentSettingsUi;
+window.saveDocumentSettingsUi = async function(){
+  await _baseSaveDocumentSettingsUi();
+  try{await api('syncLegacyDocumentSettingsWeb',TOKEN)}catch(e){}
+};
+
+const _baseRenderSignerEditor = window.renderSignerEditor;
+window.renderSignerEditor = function(){
+  const arr=SETTINGS.signers||[];
+  $('signerEditor').innerHTML=arr.map((s,i)=>`<div class="subpanel signerRow" data-i="${i}" style="margin-bottom:10px"><div class="grid3"><div><label>Ad Soyad</label><input class="signerName" value="${esc(s.name||'')}"><label>İmza Görseli</label><input id="signerFile_${i}" type="file" accept="image/*"><button class="btn small secondary" style="margin-top:7px" onclick="uploadSignerSignatureUi(${i})">İmza Görselini Yükle</button><div class="muted">${s.signature_path?'✓ Kayıtlı imza görseli var':'İmza görseli yüklenmemiş'}</div></div><div><label>Ünvan</label><textarea class="signerTitle">${esc(s.title||'')}</textarea><label>Başlangıç</label><input class="signerStart" value="${esc(s.start_date||'')}"><label>Bitiş</label><input class="signerEnd" value="${esc(s.end_date||'Devam Ediyor')}"></div><div><label>Varsayılan İmza</label><select class="signerMode"><option value="WET" ${s.default_signature_mode!=='IMAGE'?'selected':''}>Fiziki</option><option value="IMAGE" ${s.default_signature_mode==='IMAGE'?'selected':''}>Görsel</option></select><br><label class="inlineCheck"><input class="signerActive" type="checkbox" ${s.active!==false?'checked':''}> Aktif</label></div></div></div>`).join('');
+};
+
+window.uploadSignerSignatureUi = async function(index){
+  try{
+    const file=$('signerFile_'+index).files[0];if(!file)throw new Error('İmza görseli seçin.');
+    const up=failIf(await api('uploadUserFile',TOKEN,await readDataUrl(file),file.name,'signature'));
+    SETTINGS.signers[index].signature_path=up.path;
+    const rows=[...document.querySelectorAll('.signerRow')].map((el,i)=>({id:(SETTINGS.signers[i]||{}).id||String(i+1),name:el.querySelector('.signerName').value,title:el.querySelector('.signerTitle').value,start_date:el.querySelector('.signerStart').value,end_date:el.querySelector('.signerEnd').value||'Devam Ediyor',active:el.querySelector('.signerActive').checked,default_signature_mode:el.querySelector('.signerMode').value,signature_path:(SETTINGS.signers[i]||{}).signature_path||''}));
+    failIf(await api('saveSigners',TOKEN,rows));
+    SETTINGS.signers=rows;renderSignerEditor();msg('Amir imza görseli kaydedildi.');
+  }catch(e){msg(e.message,true)}
+};
+
+window.saveSignersUi = async function(){
+  try{
+    const rows=[...document.querySelectorAll('.signerRow')].map((el,i)=>({id:(SETTINGS.signers[i]||{}).id||String(i+1),name:el.querySelector('.signerName').value,title:el.querySelector('.signerTitle').value,start_date:el.querySelector('.signerStart').value,end_date:el.querySelector('.signerEnd').value||'Devam Ediyor',active:el.querySelector('.signerActive').checked,default_signature_mode:el.querySelector('.signerMode').value,signature_path:(SETTINGS.signers[i]||{}).signature_path||''}));
+    failIf(await api('saveSigners',TOKEN,rows));SETTINGS.signers=rows;renderSignerEditor();msg('Amir / imza ayarları kaydedildi.');
+  }catch(e){msg(e.message,true)}
+};
+
+window.showApprovalGroup = async function(id){
+  try{
+    const r=failIf(await api('getApprovalListDetail',TOKEN,id));
+    $('recordModalBody').innerHTML=`<div class="sectionTitle"><div><h3>${esc(docLabel(r.approval_list.belge_turu))} — Olur Grubu</h3><p class="muted">${new Date(r.approval_list.created_at).toLocaleString('tr-TR')}</p></div><button class="btn" onclick="downloadApprovalGroupPdf('${id}')">Olur Listesi PDF İndir</button></div><div class="tablewrap"><table><thead><tr><th>Sıra</th><th>Ad Soyad</th><th>TC</th><th>Ünvan</th><th>Görev Yeri</th><th>Tarih/Sayı</th><th>Durum</th></tr></thead><tbody>${(r.items||[]).map(x=>`<tr><td>${esc(x.item.sira_no)}</td><td>${esc(x.item.ad_soyad)}</td><td>${esc(x.item.tc_kimlik)}</td><td>${esc(x.item.unvan)}</td><td>${esc(x.item.gorev_yeri)}</td><td>${esc(x.item.tarih||'')} ${esc(x.item.sayi||'')}</td><td>${x.record?statusHtml(x.record.status):'Kayıt yok'}</td></tr>`).join('')}</tbody></table></div>`;
+    $('recordModal').classList.remove('hidden');
+  }catch(e){msg(e.message,true)}
+};
+
+window.downloadApprovalGroupPdf = async function(id){
+  try{
+    const m=failIf(await api('getApprovalGroupPdfModelWeb',TOKEN,id));
+    const pageW=841.8898,pageH=595.2756,scale=2.3;
+    const headers=['Sıra No','Ad Soyad','T.C. Kimlik No','Kurumu/Görev Yeri','Ünvanı'];
+    const widths=[50,155,105,285,160],left=28,top=pageH-48,rowH=28;
+    const pages=[];let canvas,ctx,y;
+    function newPage(){canvas=document.createElement('canvas');canvas.width=Math.round(pageW*scale);canvas.height=Math.round(pageH*scale);ctx=canvas.getContext('2d');ctx.scale(scale,scale);ctx.fillStyle='#fff';ctx.fillRect(0,0,pageW,pageH);ctx.strokeStyle='#000';ctx.fillStyle='#000';ctx.textBaseline='alphabetic';ctx.textAlign='center';ctx.font='700 11px "Segoe UI",Arial';ctx.fillText('BAŞARI BELGESİ OLUR LİSTESİ',pageW/2,24);let x=left;ctx.font='700 7.3px "Segoe UI",Arial';headers.forEach((h,i)=>{ctx.strokeRect(x,top-rowH,widths[i],rowH);ctx.fillText(h,x+widths[i]/2,top-18);x+=widths[i]});y=top-rowH;pages.push(canvas)}
+    function trunc(text,maxW){ctx.font='400 7px "Segoe UI",Arial';let s=String(text||'');while(s&&ctx.measureText(s).width>maxW-6)s=s.slice(0,-1);if(s!==String(text||'')&&s.length>1)s=s.slice(0,-1)+'…';return s}
+    newPage();
+    (m.rows||[]).forEach((r,index)=>{if(y-rowH<35)newPage();const vals=[String(index+1),r.ad_soyad,r.tc_kimlik,r.gorev_yeri,r.unvan];let x=left;ctx.font='400 7px "Segoe UI",Arial';vals.forEach((v,i)=>{ctx.strokeRect(x,y-rowH,widths[i],rowH);ctx.fillText(trunc(v,widths[i]),x+widths[i]/2,y-18);x+=widths[i]});y-=rowH});
+    const jsPDF=window.jspdf.jsPDF,pdf=new jsPDF({orientation:'landscape',unit:'pt',format:'a4',compress:true});pages.forEach((c,i)=>{if(i)pdf.addPage('a4','landscape');pdf.addImage(c.toDataURL('image/jpeg',.97),'JPEG',0,0,pageW,pageH,undefined,'FAST')});
+    pdf.save(`olur_listesi_${String(id).slice(0,8)}.pdf`);
+  }catch(e){msg(e.message,true)}
+};
+
+window.approvalDelivered = async function(){
+  try{const ids=checked('.approvalCheck');if(!ids.length)throw new Error('Kayıt seçin.');if(!confirm('Seçili ve PDF hazırlanmış kayıtlar İmzalandı ve Teslim Edildi yapılsın mı?'))return;const r=failIf(await api('strictMarkDeliveredWeb',TOKEN,ids));msg(`${r.count} kayıt arşive geçirildi.${r.no_pdf?' PDF eksik: '+r.no_pdf:''}`);await loadApproval();await loadDashboard();}catch(e){msg(e.message,true)}
+};
+
+const _baseExecuteBulkOperation=window.executeBulkOperation;
+window.executeBulkOperation=async function(){
+  if(ACTIVE_BULK!=='bulk_delivered')return _baseExecuteBulkOperation();
+  try{const ids=checked('.bulkCheck');if(!ids.length)throw new Error('Kayıt seçin.');const r=failIf(await api('strictMarkDeliveredWeb',TOKEN,ids));msg(`${r.count} kayıt İmzalandı ve Teslim Edildi yapıldı.${r.no_pdf?' PDF eksik: '+r.no_pdf:''}`);await loadBulkCandidates();await loadDashboard();}catch(e){msg(e.message,true)}
+};
+
+const _baseGenerateCertificatePdf=window.generateCertificatePdf;
+window.generateCertificatePdf=async function(recordId){
+  try{
+    const req=failIf(await api('getPdfApprovalRequirementWeb',TOKEN,recordId));
+    if(req.enabled){
+      const today=new Date(),dd=String(today.getDate()).padStart(2,'0'),mm=String(today.getMonth()+1).padStart(2,'0'),yyyy=today.getFullYear();
+      const dateText=prompt('Olur Yazısı Tarihi (GG.AA.YYYY):',`${dd}.${mm}.${yyyy}`);if(dateText===null)return;
+      const last=prompt(`Olur Yazısı Son Numarası:\nÖn ek: ${req.prefix||'(yok)'}`,'');if(last===null)return;
+      failIf(await api('saveRecordApprovalInfoWeb',TOKEN,recordId,dateText,last));
+    }
+    return _baseGenerateCertificatePdf(recordId);
+  }catch(e){msg(e.message,true)}
+};
+
+setTimeout(()=>{try{if(TOKEN)api('syncLegacyDocumentSettingsWeb',TOKEN)}catch(e){}},500);
+</script>
