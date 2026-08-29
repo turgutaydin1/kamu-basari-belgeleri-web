@@ -1,0 +1,8 @@
+{$APP_DOMAIN} {
+    encode gzip zstd
+    reverse_proxy basari-web:8501
+    header {
+        -X-Frame-Options
+        Content-Security-Policy "frame-ancestors 'self' https://sites.google.com https://*.googleusercontent.com;"
+    }
+}
