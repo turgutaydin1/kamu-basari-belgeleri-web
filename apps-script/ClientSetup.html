@@ -1,0 +1,59 @@
+<script>
+(function(){
+  let firstRun = false;
+  let originalRegister = null;
+
+  async function refreshFirstRun(){
+    try{
+      const r = await new Promise((resolve,reject)=>{
+        google.script.run.withSuccessHandler(resolve).withFailureHandler(e=>reject(new Error(e && e.message ? e.message : String(e)))).getFirstRunState();
+      });
+      firstRun = !!(r && r.ok && !r.configured);
+      if(firstRun){
+        const title = document.getElementById('authTitle');
+        const btn = document.querySelector('#registerBox button.btn');
+        const note = document.querySelector('#registerBox .note');
+        if(title) title.textContent = 'İlk Yönetici Kurulumu';
+        if(btn) btn.textContent = 'Yönetici Hesabını Oluştur';
+        if(note) note.textContent = 'İlk açılışta yalnız bir kez yönetici hesabı oluşturulur. Kod eklemeniz gerekmez.';
+      }
+    }catch(e){ console.error(e); }
+  }
+
+  window.addEventListener('load', function(){
+    originalRegister = window.register;
+    refreshFirstRun();
+  });
+
+  const previousOpenAuth = window.openAuth;
+  window.openAuth = function(mode){
+    if(firstRun) mode = 'register';
+    if(typeof previousOpenAuth === 'function') previousOpenAuth(mode);
+    if(firstRun){
+      const title = document.getElementById('authTitle');
+      if(title) title.textContent = 'İlk Yönetici Kurulumu';
+    }
+  };
+
+  window.register = async function(){
+    if(!firstRun){
+      if(typeof originalRegister === 'function') return originalRegister();
+      return;
+    }
+    const fullName = (document.getElementById('regName')||{}).value || '';
+    const email = (document.getElementById('regEmail')||{}).value || '';
+    const password = (document.getElementById('regPass')||{}).value || '';
+    const msg = document.getElementById('authMsg');
+    try{
+      const r = await new Promise((resolve,reject)=>{
+        google.script.run.withSuccessHandler(resolve).withFailureHandler(e=>reject(new Error(e && e.message ? e.message : String(e)))).createFirstAdmin(fullName,email,password);
+      });
+      if(!r || !r.ok){ if(msg) msg.innerHTML='<div class="msg err">'+((r&&r.message)||'Kurulum tamamlanamadı.')+'</div>'; return; }
+      localStorage.setItem('mia_basari_token', r.token);
+      firstRun = false;
+      if(msg) msg.innerHTML='<div class="msg">İlk yönetici hesabı oluşturuldu.</div>';
+      setTimeout(()=>location.reload(),500);
+    }catch(e){ if(msg) msg.innerHTML='<div class="msg err">'+e.message+'</div>'; }
+  };
+})();
+</script>
