@@ -612,5 +612,103 @@ setTimeout(()=>{try{if(TOKEN)api('syncLegacyDocumentSettingsWeb',TOKEN)}catch(e)
 })();
 </script>
 
+<script>
+(function(){
+  function injectMarketingStyles(){
+    if(document.getElementById('marketingStyles')) return;
+    const s=document.createElement('style');
+    s.id='marketingStyles';
+    s.textContent=`
+      #landing{min-height:100vh;background:#f6f8fb;color:#17212b}
+      #landing .mkTop{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid #dbe3eb}
+      #landing .mkTopIn{max-width:1240px;margin:auto;padding:13px 22px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+      #landing .mkBrand{display:flex;align-items:center;gap:12px}
+      #landing .mkLogo{width:44px;height:44px;border-radius:11px;background:linear-gradient(145deg,#173a5e,#0d243b);display:grid;place-items:center;color:white;font-size:22px;box-shadow:0 6px 18px rgba(23,58,94,.2)}
+      #landing .mkBrand b{display:block;color:#173a5e;font-size:16px}
+      #landing .mkBrand span{display:block;color:#607386;font-size:12px;margin-top:2px}
+      #landing .mkNav{display:flex;gap:18px;align-items:center}
+      #landing .mkNav a{color:#40566c;text-decoration:none;font-size:13px;font-weight:700}
+      #landing .mkHero{background:radial-gradient(circle at 82% 18%,#dfeaf4 0,transparent 30%),linear-gradient(180deg,#fff 0,#f5f8fb 100%);border-bottom:1px solid #dbe3eb}
+      #landing .mkHeroIn{max-width:1240px;margin:auto;padding:78px 22px 72px;display:grid;grid-template-columns:1.08fr .92fr;gap:58px;align-items:center}
+      #landing .mkEyebrow{display:inline-block;padding:7px 11px;border-radius:999px;background:#eaf1f7;color:#173a5e;font-size:12px;font-weight:800;margin-bottom:18px}
+      #landing .mkHero h2{font-size:48px;line-height:1.08;letter-spacing:-1.2px;color:#173a5e;margin:0 0 20px}
+      #landing .mkHero p{font-size:18px;line-height:1.7;color:#53697d;max-width:720px;margin:0}
+      #landing .mkActions{display:flex;gap:11px;flex-wrap:wrap;margin-top:28px}
+      #landing .mkTrust{display:flex;gap:18px;flex-wrap:wrap;margin-top:25px;color:#53697d;font-size:12px;font-weight:700}
+      #landing .mkPreview{background:#fff;border:1px solid #d7e0e8;border-radius:18px;padding:18px;box-shadow:0 24px 55px rgba(18,44,70,.13)}
+      #landing .mkPreviewHead{display:flex;justify-content:space-between;align-items:center;padding:3px 3px 14px;border-bottom:1px solid #edf1f4}
+      #landing .mkPreviewHead b{color:#173a5e;font-size:14px}.mkDot{width:8px;height:8px;border-radius:50%;background:#176b45;display:inline-block;margin-right:6px}
+      #landing .mkFlow{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:15px 0}
+      #landing .mkStep{border:1px solid #dce4eb;border-radius:10px;padding:11px 8px;text-align:center;background:#f9fbfc;color:#173a5e;font-size:11px;font-weight:800}
+      #landing .mkMiniGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+      #landing .mkMini{border:1px solid #e0e6ec;border-radius:11px;padding:13px;background:#fff}.mkMini strong{display:block;color:#173a5e;font-size:20px}.mkMini span{color:#607386;font-size:11px}
+      #landing .mkSection{max-width:1240px;margin:auto;padding:68px 22px}
+      #landing .mkSectionTitle{text-align:center;max-width:790px;margin:0 auto 34px}.mkSectionTitle h3{font-size:31px;margin:0 0 11px;color:#173a5e}.mkSectionTitle p{margin:0;color:#607386;line-height:1.6}
+      #landing .mkCards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+      #landing .mkCard{background:#fff;border:1px solid #dce4eb;border-radius:14px;padding:20px;min-height:170px;box-shadow:0 8px 26px rgba(20,45,70,.045)}
+      #landing .mkCardIcon{font-size:24px;margin-bottom:11px}.mkCard h4{margin:0 0 8px;color:#173a5e;font-size:17px}.mkCard p{margin:0;color:#607386;font-size:13px;line-height:1.6}
+      #landing .mkProcess{background:#173a5e;color:#fff}.mkProcess .mkSectionTitle h3,.mkProcess .mkSectionTitle p{color:#fff}.mkProcess .mkSectionTitle p{opacity:.8}
+      #landing .mkProcessGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.mkProcessItem{padding:20px;border-radius:13px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06)}.mkProcessItem b{display:block;font-size:26px;margin-bottom:8px}.mkProcessItem strong{display:block;margin-bottom:6px}.mkProcessItem span{font-size:12px;line-height:1.5;opacity:.82}
+      #landing .mkDemo{max-width:1000px;margin:0 auto 72px;background:#fff;border:1px solid #d7e0e8;border-radius:18px;padding:30px;display:grid;grid-template-columns:1.3fr .7fr;gap:25px;align-items:center;box-shadow:0 18px 45px rgba(20,45,70,.08)}
+      #landing .mkDemo h3{margin:0 0 10px;font-size:26px;color:#173a5e}.mkDemo p{color:#607386;line-height:1.6;margin:0}.mkDemoSide{text-align:right}.mkDemoSide .btn{margin-left:7px}
+      #landing .mkFooter{border-top:1px solid #dbe3eb;background:#fff}.mkFooterIn{max-width:1240px;margin:auto;padding:25px 22px;display:flex;justify-content:space-between;gap:20px;color:#6b7e90;font-size:12px}
+      @media(max-width:900px){#landing .mkHeroIn{grid-template-columns:1fr;padding-top:52px}#landing .mkHero h2{font-size:38px}#landing .mkCards{grid-template-columns:1fr 1fr}#landing .mkProcessGrid{grid-template-columns:1fr 1fr}#landing .mkDemo{grid-template-columns:1fr}.mkDemoSide{text-align:left}}
+      @media(max-width:620px){#landing .mkNav a{display:none}#landing .mkHero h2{font-size:32px}#landing .mkCards,#landing .mkProcessGrid,#landing .mkFlow{grid-template-columns:1fr}#landing .mkMiniGrid{grid-template-columns:1fr}.mkFooterIn{flex-direction:column}}
+    `;
+    document.head.appendChild(s);
+  }
+
+  function renderMarketing(){
+    const landing=document.getElementById('landing');
+    if(!landing || landing.dataset.marketingReady==='1') return;
+    landing.dataset.marketingReady='1';
+    injectMarketingStyles();
+    landing.innerHTML=`
+      <header class="mkTop"><div class="mkTopIn">
+        <div class="mkBrand"><div class="mkLogo">🏅</div><div><b>Kamu Kurumları Başarı Belgeleri</b><span>Düzenleme ve Takip Sistemi</span></div></div>
+        <nav class="mkNav"><a href="#ozellikler">Özellikler</a><a href="#surec">İş Akışı</a><a href="#demo">Demo</a><button class="btn secondary" onclick="openAuth('login')">Üye Girişi</button></nav>
+      </div></header>
+
+      <section class="mkHero"><div class="mkHeroIn">
+        <div>
+          <span class="mkEyebrow">KAMU KURUMLARI İÇİN BELGE YÖNETİM ÇÖZÜMÜ</span>
+          <h2>Başarı ve Üstün Başarı Belgesi süreçlerini tek sistemden yönetin</h2>
+          <p>Personel kaydından fotoğraf ve imza yönetimine, Olur listelerinden resmî tarih-sayı tahsisine, dört farklı belge şablonundan PDF üretimine kadar tüm süreç gerçek kurum iş akışına göre yürütülür.</p>
+          <div class="mkActions"><button class="btn" onclick="openAuth('register')">Demoyu Ücretsiz Dene</button><button class="btn secondary" onclick="openAuth('login')">Üye Girişi</button></div>
+          <div class="mkTrust"><span>✓ Kurulum gerektirmez</span><span>✓ Tarayıcıdan erişim</span><span>✓ Kişiye özel çalışma alanı</span></div>
+        </div>
+        <div class="mkPreview">
+          <div class="mkPreviewHead"><b><span class="mkDot"></span>Gerçek sistem iş akışı</b><span class="pill">Canlı Demo</span></div>
+          <div class="mkFlow"><div class="mkStep">1. TASLAK</div><div class="mkStep">2. OLUR LİSTESİ</div><div class="mkStep">3. PDF / SAYI</div><div class="mkStep">4. TESLİM</div></div>
+          <div class="mkMiniGrid"><div class="mkMini"><strong>4</strong><span>Gerçek belge şablonu</span></div><div class="mkMini"><strong>9</strong><span>Ana yönetim bölümü</span></div><div class="mkMini"><strong>3</strong><span>Üstün Başarı dayanak belgesi</span></div><div class="mkMini"><strong>7 gün</strong><span>Ücretsiz demo süresi</span></div></div>
+        </div>
+      </div></section>
+
+      <section id="ozellikler" class="mkSection"><div class="mkSectionTitle"><h3>Programda neler var?</h3><p>Masaüstünde kullanılan gerçek sistemin temel modülleri web ortamına taşınır; demo kullanıcıları temsili ekran değil çalışan özellikleri görür.</p></div>
+        <div class="mkCards">
+          <div class="mkCard"><div class="mkCardIcon">➕</div><h4>Yeni Belge Kaydı</h4><p>Başarı / Üstün Başarı seçimi, personel bilgileri, gerekçe, taltif metni, fotoğraf ve imza yönetimi.</p></div>
+          <div class="mkCard"><div class="mkCardIcon">📊</div><h4>Excel Toplu Aktarım</h4><p>Excel dosyasını önce kontrol eder, hatalı satırları gösterir ve yalnız uygun kayıtları taslak olarak aktarır.</p></div>
+          <div class="mkCard"><div class="mkCardIcon">📋</div><h4>Olur Listeleri</h4><p>Kayıtları ayrı Olur gruplarında tutar; fotoğraf ve zorunlu alan kontrollerini süreç içinde uygular.</p></div>
+          <div class="mkCard"><div class="mkCardIcon">🏅</div><h4>Üstün Başarı Dayanakları</h4><p>Üstün Başarı için üç geçerli Başarı Belgesini ilişkilendirir; geçmiş ve sistem dışı belgeler için kontrollü manuel devam sunar.</p></div>
+          <div class="mkCard"><div class="mkCardIcon">📄</div><h4>Gerçek PDF Üretimi</h4><p>Dikey ve yatay dört belge şablonunu, fotoğrafı, imzayı, tarih-sayı ve Olur yazısı bilgilerini kullanarak PDF oluşturur.</p></div>
+          <div class="mkCard"><div class="mkCardIcon">🗂️</div><h4>Arşiv ve Toplu İşlemler</h4><p>Arama, arşiv, toplu PDF, toplu Olur, teslim, taslağa dönüş, fotoğraf eşleştirme, yedekleme ve dışa aktarım.</p></div>
+        </div>
+      </section>
+
+      <section id="surec" class="mkProcess"><div class="mkSection"><div class="mkSectionTitle"><h3>Belge süreci nasıl ilerler?</h3><p>Resmî tarih ve sayı kayıt oluşturulurken değil, doğru aşamada verilir.</p></div>
+        <div class="mkProcessGrid"><div class="mkProcessItem"><b>01</b><strong>Taslak Oluştur</strong><span>Personel ve belge bilgileri kaydedilir. Resmî tarih/sayı henüz verilmez.</span></div><div class="mkProcessItem"><b>02</b><strong>Olur Listesine Al</strong><span>Zorunlu bilgiler ve fotoğraf kontrol edilir; kayıt kendi Olur grubuna eklenir.</span></div><div class="mkProcessItem"><b>03</b><strong>PDF Hazırla</strong><span>Şablon ve bilgiler doğrulandıktan sonra tarih/sayı atanır ve belge PDF'si üretilir.</span></div><div class="mkProcessItem"><b>04</b><strong>Teslim Et ve Arşivle</strong><span>İmzalanan belge teslim edilmiş duruma alınır ve arşivde izlenmeye devam eder.</span></div></div>
+      </div></section>
+
+      <section id="demo" class="mkSection"><div class="mkDemo"><div><h3>Sistemi kendi hesabınızla deneyin</h3><p>Demo hesabı 7 gün süreyle açılır ve 10 yeni kayıt hakkı verir. Yeni kayıt, fotoğraf, Olur, PDF, toplu işlemler ve diğer temel modüller gerçek olarak çalışır.</p></div><div class="mkDemoSide"><button class="btn" onclick="openAuth('register')">Demoyu Dene</button><button class="btn secondary" onclick="openAuth('login')">Giriş Yap</button></div></div></section>
+
+      <footer class="mkFooter"><div class="mkFooterIn"><span>Kamu Kurumları Başarı Belgeleri Düzenleme ve Takip Sistemi</span><span>Kurumsal süreçler için web tabanlı çözüm</span></div></footer>
+    `;
+  }
+
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',renderMarketing);
+  else renderMarketing();
+})();
+</script>
+
 </body>
 </html>
