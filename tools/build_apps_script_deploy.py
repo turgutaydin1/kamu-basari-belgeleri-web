@@ -41,10 +41,11 @@ pdf = (SRC / 'ClientPdf.html').read_text(encoding='utf-8')
 parity = (SRC / 'ClientParity.html').read_text(encoding='utf-8')
 setup = (SRC / 'ClientSetup.html').read_text(encoding='utf-8')
 lifecycle = (SRC / 'ClientLifecycle.html').read_text(encoding='utf-8')
+marketing = (SRC / 'ClientMarketing.html').read_text(encoding='utf-8')
 
 index = index.replace("<?!= include('Styles'); ?>", styles)
 index = index.replace("<?!= include('ClientCore'); ?>", core)
-index = index.replace("<?!= include('ClientPdf'); ?>", pdf + '\n' + parity + '\n' + setup + '\n' + lifecycle)
+index = index.replace("<?!= include('ClientPdf'); ?>", pdf + '\n' + parity + '\n' + setup + '\n' + lifecycle + '\n' + marketing)
 if '<?!=' in index:
     raise SystemExit('Unresolved Apps Script include remains in deployment Index.html')
 (OUT / 'Index.html').write_text(index, encoding='utf-8')
@@ -53,6 +54,6 @@ manifest = SRC / 'appsscript.json'
 if manifest.exists():
     (OUT / 'appsscript.json').write_text(manifest.read_text(encoding='utf-8'), encoding='utf-8')
 
-readme = '''# Apps Script Dağıtım Paketi\n\nBu klasör otomatik üretilir. Google Apps Script'e yalnız şu dosyaları aktarın:\n\n- `Code.gs`\n- `Index.html`\n- gerekirse `appsscript.json`\n\nİlk açılışta yönetici hesabı web ekranından oluşturulur; ayrıca kod eklemeniz gerekmez.\n\nGeliştirme kaynakları `apps-script/` klasöründedir. Bu klasördeki dosyaları elle düzenlemeyin.\n'''
+readme = '''# Apps Script Dağıtım Paketi\n\nBu klasör otomatik üretilir. Google Apps Script'e yalnız şu dosyaları aktarın:\n\n- `Code.gs`\n- `Index.html`\n- gerekirse `appsscript.json`\n\nİlk açılışta yönetici hesabı web ekranından oluşturulur; ayrıca kod eklemeniz gerekmez.\nTanıtım/vitrin sayfası ile uygulama ekranı birbirinden ayrıdır.\n\nGeliştirme kaynakları `apps-script/` klasöründedir. Bu klasördeki dosyaları elle düzenlemeyin.\n'''
 (OUT / 'README.md').write_text(readme, encoding='utf-8')
 print('Apps Script deployment package built successfully.')
