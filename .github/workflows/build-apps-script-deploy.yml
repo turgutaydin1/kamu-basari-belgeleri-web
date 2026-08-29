@@ -1,0 +1,37 @@
+name: Build Apps Script Deploy Package
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps-script/**'
+      - 'tools/build_apps_script_deploy.py'
+      - '.github/workflows/build-apps-script-deploy.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build deployment files
+        run: python tools/build_apps_script_deploy.py
+      - name: Commit generated deployment package
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps-script-deploy
+          if git diff --cached --quiet; then
+            echo "Deployment package is already current."
+          else
+            git commit -m "Build Apps Script deployment package"
+            git push
+          fi
