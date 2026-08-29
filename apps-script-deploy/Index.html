@@ -21,31 +21,184 @@ h2,h3,h4{color:var(--navy)}label{display:block;font-weight:700;font-size:13px;ma
 @media(max-width:720px){.hero{grid-template-columns:1fr;padding-top:45px}.hero h2{font-size:34px}.grid2,.grid3{grid-template-columns:1fr}.menu{grid-template-columns:repeat(2,1fr)}.stats5,.stats4{grid-template-columns:1fr}.searchItem{grid-template-columns:1fr}}
 </style>
 
+<style>
+.portfolioLanding{min-height:100vh;background:#f6f8fb;color:#17212b}.portfolioTop{position:sticky;top:0;z-index:35;background:rgba(255,255,255,.97);border-bottom:1px solid #dce4eb;backdrop-filter:blur(8px)}.portfolioTopIn{max-width:1240px;margin:auto;padding:13px 22px;display:flex;justify-content:space-between;align-items:center;gap:18px}.portfolioBrand{display:flex;align-items:center;gap:12px}.portfolioLogo{width:44px;height:44px;border-radius:11px;background:linear-gradient(145deg,#173a5e,#0d243b);display:grid;place-items:center;color:#fff;font-weight:900;font-size:16px}.portfolioBrand strong{display:block;color:#173a5e;font-size:16px}.portfolioBrand span{display:block;color:#607386;font-size:12px;margin-top:2px}.portfolioNav{display:flex;gap:18px;align-items:center}.portfolioNav a{color:#40566c;text-decoration:none;font-weight:700;font-size:13px}.portfolioHero{background:radial-gradient(circle at 84% 14%,#dfeaf4 0,transparent 31%),linear-gradient(#fff,#f5f8fb);border-bottom:1px solid #dce4eb}.portfolioHeroIn{max-width:1240px;margin:auto;padding:76px 22px 70px;display:grid;grid-template-columns:1.08fr .92fr;gap:56px;align-items:center}.portfolioEyebrow{display:inline-block;padding:7px 11px;border-radius:999px;background:#eaf1f7;color:#173a5e;font-size:12px;font-weight:800;letter-spacing:.35px}.portfolioHero h1{font-size:48px;line-height:1.08;letter-spacing:-1.1px;color:#173a5e;margin:18px 0 20px}.portfolioHero p{font-size:18px;line-height:1.7;color:#53697d;margin:0}.portfolioHeroActions{display:flex;gap:11px;flex-wrap:wrap;margin-top:28px}.portfolioHeroActions a.btn{text-decoration:none;display:inline-flex;align-items:center}.portfolioTrust{display:flex;gap:18px;flex-wrap:wrap;margin-top:24px;color:#53697d;font-size:12px;font-weight:700}.portfolioHeroPanel{background:#fff;border:1px solid #d7e0e8;border-radius:18px;padding:18px;box-shadow:0 24px 55px rgba(18,44,70,.13)}.portfolioHeroPanelTop{display:flex;align-items:center;gap:8px;padding:3px 3px 14px;border-bottom:1px solid #edf1f4;color:#173a5e}.portfolioHeroPanelTop .pill{margin-left:auto}.liveDot{width:8px;height:8px;border-radius:50%;background:#176b45;display:inline-block}.portfolioMetricGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:15px}.portfolioMetric{border:1px solid #e0e6ec;border-radius:11px;padding:13px}.portfolioMetric strong{display:block;color:#173a5e;font-size:20px}.portfolioMetric span{color:#607386;font-size:11px}.portfolioFlow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.portfolioFlow div{border:1px solid #dce4eb;border-radius:10px;padding:10px;background:#f9fbfc}.portfolioFlow b{display:block;color:#173a5e;font-size:13px}.portfolioFlow span{font-size:11px;color:#607386}.portfolioSection{max-width:1240px;margin:auto;padding:66px 22px}.portfolioSectionHead{text-align:center;max-width:790px;margin:0 auto 34px}.portfolioSectionHead h2{font-size:31px;margin:11px 0;color:#173a5e}.portfolioSectionHead p{margin:0;color:#607386;line-height:1.6}.projectGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.projectCard{background:#fff;border:1px solid #dce4eb;border-radius:16px;padding:22px;min-height:265px;display:flex;flex-direction:column;box-shadow:0 10px 28px rgba(20,45,70,.05)}.projectCardActive{border-color:#9fb8cc;box-shadow:0 15px 36px rgba(20,45,70,.10)}.projectCardPlaceholder{background:linear-gradient(135deg,#f8fafc,#eef3f7)}.projectCardTop{display:flex;justify-content:space-between;align-items:center}.projectIcon{font-size:28px}.projectStatus{font-size:11px;font-weight:800;border-radius:999px;padding:6px 9px;background:#eef3f7;color:#5b6e80}.projectStatus.active{background:#e8f6ee;color:#176b45}.projectCard h3{font-size:20px;margin:16px 0 10px;color:#173a5e}.projectCard p{margin:0;color:#607386;font-size:13px;line-height:1.65}.projectTags{display:flex;flex-wrap:wrap;gap:6px;margin:15px 0}.projectTags span{background:#eef3f7;color:#40566c;border-radius:999px;padding:5px 8px;font-size:11px;font-weight:700}.projectActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}.portfolioApproach{background:#173a5e}.portfolioSectionHead.light h2,.portfolioSectionHead.light p,.portfolioSectionHead.light .portfolioEyebrow{color:#fff}.portfolioSectionHead.light .portfolioEyebrow{background:rgba(255,255,255,.12)}.approachGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.approachItem{padding:20px;border-radius:13px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);color:#fff}.approachItem b{display:block;font-size:26px;margin-bottom:8px}.approachItem strong{display:block;margin-bottom:6px}.approachItem span{font-size:12px;line-height:1.5;opacity:.82}.portfolioCta{max-width:1000px;margin:0 auto;background:#fff;border:1px solid #d7e0e8;border-radius:18px;padding:30px;display:grid;grid-template-columns:1.3fr .7fr;gap:25px;align-items:center;box-shadow:0 18px 45px rgba(20,45,70,.08)}.portfolioCta h2{margin:11px 0 10px;font-size:26px;color:#173a5e}.portfolioCta p{color:#607386;line-height:1.6;margin:0}.portfolioCtaActions{text-align:right}.portfolioFooter{max-width:1240px;margin:auto;padding:26px 22px 34px;border-top:1px solid #dbe3eb;display:flex;justify-content:space-between;gap:20px;color:#6b7e90;font-size:12px}.portfolioFooter b{display:block;color:#173a5e;margin-bottom:3px}.portfolioFooter span{display:block}.projectDetailGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.projectDetailGrid>div{border:1px solid #dce4eb;border-radius:10px;padding:13px}.projectDetailGrid b{display:block;color:#173a5e;margin-bottom:5px}.projectDetailGrid span{color:#607386;font-size:12px;line-height:1.5}
+@media(max-width:900px){.portfolioHeroIn{grid-template-columns:1fr;padding-top:50px}.portfolioHero h1{font-size:38px}.projectGrid{grid-template-columns:1fr}.approachGrid{grid-template-columns:1fr 1fr}.portfolioCta{grid-template-columns:1fr}.portfolioCtaActions{text-align:left}}
+@media(max-width:650px){.portfolioNav a{display:none}.portfolioHero h1{font-size:32px}.portfolioMetricGrid,.portfolioFlow,.approachGrid,.projectDetailGrid{grid-template-columns:1fr}.portfolioTopIn{align-items:flex-start}.portfolioBrand span{max-width:220px}.portfolioFooter{flex-direction:column}}
+</style>
+
 </head>
 <body>
 
-<!-- TANITIM / ÜYELİK -->
-<div id="landing" class="landing">
-  <div class="top"><div class="topin">
-    <div class="brand"><div class="brandIcon">🏅</div><div><h1>Kurumsal Yazılım Çözümleri</h1><small>Kamu kurumları için süreç odaklı uygulamalar</small></div></div>
-    <button class="btn secondary" onclick="openAuth('login')">Üye Girişi</button>
-  </div></div>
-  <div class="hero">
-    <div>
-      <span class="pill">Kamu Kurumları Başarı Belgeleri Sistemi</span>
-      <h2>Başarı Belgesi işlemlerini mevcut programdaki iş akışıyla yönetin</h2>
-      <p>Yeni belge kaydı, Excel toplu aktarım, Taslak, Olur listeleri, toplu işlemler, Üstün Başarı dayanakları, fotoğraf, imza, PDF üretimi, arşiv ve yedekleme tek çalışma alanında.</p>
-      <div class="heroActions"><button class="btn" onclick="openAuth('register')">Demoyu Dene</button><button class="btn secondary" onclick="openAuth('login')">Zaten Üyeyim</button></div>
+<!-- GENEL PROJE VİTRİNİ — PORTFOLIO_ARCHITECTURE_LOCK.md ile sabittir -->
+<!--
+  ANA PROJE VİTRİNİ — SABİT MİMARİ
+  Bu alan tek bir ürünün landing page'i değildir.
+  Başarı Belgeleri dahil tüm projeler burada kartlar halinde tanıtılır.
+  Bu yapıyı tek-proje tanıtımına çevirmeyin.
+-->
+<div id="landing" class="portfolioLanding">
+  <header class="portfolioTop">
+    <div class="portfolioTopIn">
+      <div class="portfolioBrand">
+        <div class="portfolioLogo">TA</div>
+        <div>
+          <strong>Kurumsal Yazılım Çözümleri</strong>
+          <span>Kamu kurumları ve kurumsal süreçler için özel yazılımlar</span>
+        </div>
+      </div>
+      <nav class="portfolioNav">
+        <a href="#projeler">Projeler</a>
+        <a href="#yaklasim">Yaklaşım</a>
+        <a href="#iletisim">Demo</a>
+        <button class="btn secondary" onclick="openAuth('login')">Üye Girişi</button>
+      </nav>
     </div>
-    <div class="heroCard"><h3>Gerçek sistem akışı</h3>
-      <div class="feature">✓ Taslak → Olur Listesinde → PDF Hazırla → İmzalandı ve Teslim Edildi</div>
-      <div class="feature">✓ Fotoğraf zorunluluğu ve 3 günlük kontrollü geri dönüş</div>
-      <div class="feature">✓ Başarı / Üstün Başarı ayrı sayaç ve şablonları</div>
-      <div class="feature">✓ Üstün Başarı için 3 geçerli Başarı Belgesi dayanağı</div>
-      <div class="feature">✓ Dört gerçek belge şablonu ve iki sayfalı PDF</div>
+  </header>
+
+  <section class="portfolioHero">
+    <div class="portfolioHeroIn">
+      <div class="portfolioHeroCopy">
+        <span class="portfolioEyebrow">SÜREÇ ODAKLI • KURUMA ÖZEL • GELİŞTİRİLEBİLİR</span>
+        <h1>Gerçek iş süreçlerinden doğan kurumsal yazılım projeleri</h1>
+        <p>Hazır kalıp yazılımlar yerine, kurumların gerçek iş akışlarını esas alan uygulamalar geliştiriyoruz. Aşağıdaki projeler farklı operasyonel ihtiyaçlara çözüm üretir; her proje kendi tanıtım, demo ve üyelik akışına sahiptir.</p>
+        <div class="portfolioHeroActions">
+          <a class="btn" href="#projeler">Projeleri İncele</a>
+          <button class="btn secondary" onclick="openAuth('login')">Üye Girişi</button>
+        </div>
+        <div class="portfolioTrust">
+          <span>✓ Gerçek kurum süreçleri</span>
+          <span>✓ Masaüstü + web geçişine uygun</span>
+          <span>✓ Modüler ve taşınabilir mimari</span>
+        </div>
+      </div>
+      <div class="portfolioHeroPanel">
+        <div class="portfolioHeroPanelTop"><span class="liveDot"></span><b>Proje Portföyü</b><span class="pill">Canlı</span></div>
+        <div class="portfolioMetricGrid">
+          <div class="portfolioMetric"><strong>3+</strong><span>Kurumsal proje</span></div>
+          <div class="portfolioMetric"><strong>1</strong><span>Aktif web demo</span></div>
+          <div class="portfolioMetric"><strong>Web</strong><span>Google Apps Script</span></div>
+          <div class="portfolioMetric"><strong>Host</strong><span>PHP/MySQL'e hazır yön</span></div>
+        </div>
+        <div class="portfolioFlow">
+          <div><b>01</b><span>Projeyi incele</span></div>
+          <div><b>02</b><span>Demo hesabı aç</span></div>
+          <div><b>03</b><span>Gerçek sistemi kullan</span></div>
+        </div>
+      </div>
     </div>
+  </section>
+
+  <section id="projeler" class="portfolioSection">
+    <div class="portfolioSectionHead">
+      <span class="portfolioEyebrow">PROJELER</span>
+      <h2>Geliştirilen yazılım çözümleri</h2>
+      <p>Başarı Belgeleri bu portföyün yalnızca bir ürünüdür. Yeni projeler aynı vitrinde bağımsız ürün kartları olarak eklenecektir.</p>
+    </div>
+
+    <div class="projectGrid">
+      <article class="projectCard projectCardActive">
+        <div class="projectCardTop">
+          <span class="projectIcon">🏅</span>
+          <span class="projectStatus active">Demo Aktif</span>
+        </div>
+        <h3>Kamu Kurumları Başarı Belgeleri</h3>
+        <p>Başarı ve Üstün Başarı Belgelerinin kayıt, Olur, PDF, imza, tarih-sayı, arşiv ve toplu işlem süreçlerini yöneten sistem.</p>
+        <div class="projectTags"><span>Belge Yönetimi</span><span>PDF</span><span>Olur Süreci</span><span>Arşiv</span></div>
+        <div class="projectActions">
+          <button class="btn" onclick="openProjectDetail('basari')">Projeyi İncele</button>
+          <button class="btn secondary" onclick="openAuth('register')">Demoyu Dene</button>
+        </div>
+      </article>
+
+      <article class="projectCard">
+        <div class="projectCardTop">
+          <span class="projectIcon">🚪</span>
+          <span class="projectStatus">Yakında</span>
+        </div>
+        <h3>Havaalanı Geçiş İzin Yönetim Sistemi</h3>
+        <p>Şahıs ve araç geçiş izinleri, anonim kartlar, kapı yetkileri, hareket takibi ve yönetim süreçleri için geliştirilen kapsamlı sistem.</p>
+        <div class="projectTags"><span>Yetki Yönetimi</span><span>Kart Takibi</span><span>Araç İzinleri</span></div>
+        <div class="projectActions"><button class="btn secondary" disabled>Demo Hazırlanıyor</button></div>
+      </article>
+
+      <article class="projectCard">
+        <div class="projectCardTop">
+          <span class="projectIcon">🔎</span>
+          <span class="projectStatus">Yakında</span>
+        </div>
+        <h3>İstanbul Havalimanı Hanut Takip Sistemi</h3>
+        <p>Kişi ve firma bazlı takip, kural eşikleri, uyarılar, gelişmiş sorgulama, işlem geçmişi ve yönetim raporlaması için geliştirilen sistem.</p>
+        <div class="projectTags"><span>Takip</span><span>Uyarı Kuralları</span><span>Raporlama</span></div>
+        <div class="projectActions"><button class="btn secondary" disabled>Demo Hazırlanıyor</button></div>
+      </article>
+
+      <article class="projectCard projectCardPlaceholder">
+        <div class="projectCardTop"><span class="projectIcon">＋</span><span class="projectStatus">Genişleyebilir</span></div>
+        <h3>Yeni Projeler</h3>
+        <p>Yeni geliştirilen uygulamalar mevcut ana vitrinin yapısı değiştirilmeden bu alana yeni kartlar halinde eklenecek.</p>
+        <div class="projectTags"><span>Yeni Ürün</span><span>Yeni Demo</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section id="yaklasim" class="portfolioApproach">
+    <div class="portfolioSection">
+      <div class="portfolioSectionHead light">
+        <span class="portfolioEyebrow">YAKLAŞIM</span>
+        <h2>Programı iş akışına uyduruyoruz</h2>
+        <p>Her proje, gerçek kullanıcı işlemleri ve kurum kuralları üzerinden şekillenir.</p>
+      </div>
+      <div class="approachGrid">
+        <div class="approachItem"><b>01</b><strong>Gerçek Süreç</strong><span>Mevcut işleyiş, formlar ve karar kuralları analiz edilir.</span></div>
+        <div class="approachItem"><b>02</b><strong>Birebir İş Mantığı</strong><span>Çalışan sistemin kuralları web sürümünde korunur.</span></div>
+        <div class="approachItem"><b>03</b><strong>Taşınabilir Mimari</strong><span>Bugünkü Google altyapısından gelecekteki normal hosta geçiş gözetilir.</span></div>
+        <div class="approachItem"><b>04</b><strong>Sürekli Gelişim</strong><span>Yeni ihtiyaçlar mevcut sistemi bozmadan modüler şekilde eklenir.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="iletisim" class="portfolioSection">
+    <div class="portfolioCta">
+      <div>
+        <span class="portfolioEyebrow">CANLI DEMO</span>
+        <h2>Başarı Belgeleri sistemini şimdi deneyin</h2>
+        <p>Aktif demo şu anda Başarı Belgeleri projesi için kullanılabilir. Diğer projeler hazır oldukça aynı ana vitrinde etkinleştirilecek.</p>
+      </div>
+      <div class="portfolioCtaActions">
+        <button class="btn" onclick="openAuth('register')">Demoyu Dene</button>
+        <button class="btn secondary" onclick="openAuth('login')">Üye Girişi</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="portfolioFooter">
+    <div><b>Kurumsal Yazılım Çözümleri</b><span>Gerçek süreçler için geliştirilen uygulamalar</span></div>
+    <div>Proje vitrini • Demo • Üyelik • Uygulama</div>
+  </footer>
+</div>
+
+<!-- Başarı Belgeleri proje detay penceresi -->
+<div id="projectDetailModal" class="modalbg hidden">
+  <div class="modal wide">
+    <div class="sectionTitle"><h2>Kamu Kurumları Başarı Belgeleri</h2><button class="btn secondary" onclick="closeProjectDetail()">✕</button></div>
+    <p>Başarı ve Üstün Başarı Belgelerinin kurum içindeki gerçek iş akışını dijital ortamda yöneten kapsamlı belge düzenleme ve takip sistemidir.</p>
+    <div class="projectDetailGrid">
+      <div><b>Yeni Belge Kaydı</b><span>Personel, fotoğraf, gerekçe, taltif ve imza bilgileri.</span></div>
+      <div><b>Excel Toplu Aktarım</b><span>Kontrollü toplu kayıt ve hata önizleme.</span></div>
+      <div><b>Taslak / Olur</b><span>Kontrollü durum geçişleri ve Olur grupları.</span></div>
+      <div><b>PDF / Tarih / Sayı</b><span>Dört gerçek şablon ve resmî numaralandırma.</span></div>
+      <div><b>Üstün Başarı</b><span>Üç geçerli Başarı Belgesi dayanağı.</span></div>
+      <div><b>Arşiv / Toplu İşlemler</b><span>PDF, yedekleme, fotoğraf eşleştirme ve diğer işlemler.</span></div>
+    </div>
+    <div class="toolbar" style="margin-top:18px"><button class="btn" onclick="closeProjectDetail();openAuth('register')">Demoyu Dene</button><button class="btn secondary" onclick="closeProjectDetail();openAuth('login')">Üye Girişi</button></div>
   </div>
 </div>
+<script>
+function openProjectDetail(projectId){if(projectId==='basari')document.getElementById('projectDetailModal').classList.remove('hidden');}
+function closeProjectDetail(){document.getElementById('projectDetailModal').classList.add('hidden');}
+</script>
+
 
 <div id="authModal" class="modalbg hidden"><div class="modal">
   <div class="sectionTitle"><h2 id="authTitle">Üye Girişi</h2><button class="btn secondary" onclick="closeAuth()">✕</button></div>
@@ -609,104 +762,6 @@ setTimeout(()=>{try{if(TOKEN)api('syncLegacyDocumentSettingsWeb',TOKEN)}catch(e)
     if(TOKEN) setTimeout(()=>enterApp(),120);
     else showLandingNow();
   });
-})();
-</script>
-
-<script>
-(function(){
-  function injectMarketingStyles(){
-    if(document.getElementById('marketingStyles')) return;
-    const s=document.createElement('style');
-    s.id='marketingStyles';
-    s.textContent=`
-      #landing{min-height:100vh;background:#f6f8fb;color:#17212b}
-      #landing .mkTop{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid #dbe3eb}
-      #landing .mkTopIn{max-width:1240px;margin:auto;padding:13px 22px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-      #landing .mkBrand{display:flex;align-items:center;gap:12px}
-      #landing .mkLogo{width:44px;height:44px;border-radius:11px;background:linear-gradient(145deg,#173a5e,#0d243b);display:grid;place-items:center;color:white;font-size:22px;box-shadow:0 6px 18px rgba(23,58,94,.2)}
-      #landing .mkBrand b{display:block;color:#173a5e;font-size:16px}
-      #landing .mkBrand span{display:block;color:#607386;font-size:12px;margin-top:2px}
-      #landing .mkNav{display:flex;gap:18px;align-items:center}
-      #landing .mkNav a{color:#40566c;text-decoration:none;font-size:13px;font-weight:700}
-      #landing .mkHero{background:radial-gradient(circle at 82% 18%,#dfeaf4 0,transparent 30%),linear-gradient(180deg,#fff 0,#f5f8fb 100%);border-bottom:1px solid #dbe3eb}
-      #landing .mkHeroIn{max-width:1240px;margin:auto;padding:78px 22px 72px;display:grid;grid-template-columns:1.08fr .92fr;gap:58px;align-items:center}
-      #landing .mkEyebrow{display:inline-block;padding:7px 11px;border-radius:999px;background:#eaf1f7;color:#173a5e;font-size:12px;font-weight:800;margin-bottom:18px}
-      #landing .mkHero h2{font-size:48px;line-height:1.08;letter-spacing:-1.2px;color:#173a5e;margin:0 0 20px}
-      #landing .mkHero p{font-size:18px;line-height:1.7;color:#53697d;max-width:720px;margin:0}
-      #landing .mkActions{display:flex;gap:11px;flex-wrap:wrap;margin-top:28px}
-      #landing .mkTrust{display:flex;gap:18px;flex-wrap:wrap;margin-top:25px;color:#53697d;font-size:12px;font-weight:700}
-      #landing .mkPreview{background:#fff;border:1px solid #d7e0e8;border-radius:18px;padding:18px;box-shadow:0 24px 55px rgba(18,44,70,.13)}
-      #landing .mkPreviewHead{display:flex;justify-content:space-between;align-items:center;padding:3px 3px 14px;border-bottom:1px solid #edf1f4}
-      #landing .mkPreviewHead b{color:#173a5e;font-size:14px}.mkDot{width:8px;height:8px;border-radius:50%;background:#176b45;display:inline-block;margin-right:6px}
-      #landing .mkFlow{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:15px 0}
-      #landing .mkStep{border:1px solid #dce4eb;border-radius:10px;padding:11px 8px;text-align:center;background:#f9fbfc;color:#173a5e;font-size:11px;font-weight:800}
-      #landing .mkMiniGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
-      #landing .mkMini{border:1px solid #e0e6ec;border-radius:11px;padding:13px;background:#fff}.mkMini strong{display:block;color:#173a5e;font-size:20px}.mkMini span{color:#607386;font-size:11px}
-      #landing .mkSection{max-width:1240px;margin:auto;padding:68px 22px}
-      #landing .mkSectionTitle{text-align:center;max-width:790px;margin:0 auto 34px}.mkSectionTitle h3{font-size:31px;margin:0 0 11px;color:#173a5e}.mkSectionTitle p{margin:0;color:#607386;line-height:1.6}
-      #landing .mkCards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
-      #landing .mkCard{background:#fff;border:1px solid #dce4eb;border-radius:14px;padding:20px;min-height:170px;box-shadow:0 8px 26px rgba(20,45,70,.045)}
-      #landing .mkCardIcon{font-size:24px;margin-bottom:11px}.mkCard h4{margin:0 0 8px;color:#173a5e;font-size:17px}.mkCard p{margin:0;color:#607386;font-size:13px;line-height:1.6}
-      #landing .mkProcess{background:#173a5e;color:#fff}.mkProcess .mkSectionTitle h3,.mkProcess .mkSectionTitle p{color:#fff}.mkProcess .mkSectionTitle p{opacity:.8}
-      #landing .mkProcessGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.mkProcessItem{padding:20px;border-radius:13px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06)}.mkProcessItem b{display:block;font-size:26px;margin-bottom:8px}.mkProcessItem strong{display:block;margin-bottom:6px}.mkProcessItem span{font-size:12px;line-height:1.5;opacity:.82}
-      #landing .mkDemo{max-width:1000px;margin:0 auto 72px;background:#fff;border:1px solid #d7e0e8;border-radius:18px;padding:30px;display:grid;grid-template-columns:1.3fr .7fr;gap:25px;align-items:center;box-shadow:0 18px 45px rgba(20,45,70,.08)}
-      #landing .mkDemo h3{margin:0 0 10px;font-size:26px;color:#173a5e}.mkDemo p{color:#607386;line-height:1.6;margin:0}.mkDemoSide{text-align:right}.mkDemoSide .btn{margin-left:7px}
-      #landing .mkFooter{border-top:1px solid #dbe3eb;background:#fff}.mkFooterIn{max-width:1240px;margin:auto;padding:25px 22px;display:flex;justify-content:space-between;gap:20px;color:#6b7e90;font-size:12px}
-      @media(max-width:900px){#landing .mkHeroIn{grid-template-columns:1fr;padding-top:52px}#landing .mkHero h2{font-size:38px}#landing .mkCards{grid-template-columns:1fr 1fr}#landing .mkProcessGrid{grid-template-columns:1fr 1fr}#landing .mkDemo{grid-template-columns:1fr}.mkDemoSide{text-align:left}}
-      @media(max-width:620px){#landing .mkNav a{display:none}#landing .mkHero h2{font-size:32px}#landing .mkCards,#landing .mkProcessGrid,#landing .mkFlow{grid-template-columns:1fr}#landing .mkMiniGrid{grid-template-columns:1fr}.mkFooterIn{flex-direction:column}}
-    `;
-    document.head.appendChild(s);
-  }
-
-  function renderMarketing(){
-    const landing=document.getElementById('landing');
-    if(!landing || landing.dataset.marketingReady==='1') return;
-    landing.dataset.marketingReady='1';
-    injectMarketingStyles();
-    landing.innerHTML=`
-      <header class="mkTop"><div class="mkTopIn">
-        <div class="mkBrand"><div class="mkLogo">🏅</div><div><b>Kamu Kurumları Başarı Belgeleri</b><span>Düzenleme ve Takip Sistemi</span></div></div>
-        <nav class="mkNav"><a href="#ozellikler">Özellikler</a><a href="#surec">İş Akışı</a><a href="#demo">Demo</a><button class="btn secondary" onclick="openAuth('login')">Üye Girişi</button></nav>
-      </div></header>
-
-      <section class="mkHero"><div class="mkHeroIn">
-        <div>
-          <span class="mkEyebrow">KAMU KURUMLARI İÇİN BELGE YÖNETİM ÇÖZÜMÜ</span>
-          <h2>Başarı ve Üstün Başarı Belgesi süreçlerini tek sistemden yönetin</h2>
-          <p>Personel kaydından fotoğraf ve imza yönetimine, Olur listelerinden resmî tarih-sayı tahsisine, dört farklı belge şablonundan PDF üretimine kadar tüm süreç gerçek kurum iş akışına göre yürütülür.</p>
-          <div class="mkActions"><button class="btn" onclick="openAuth('register')">Demoyu Ücretsiz Dene</button><button class="btn secondary" onclick="openAuth('login')">Üye Girişi</button></div>
-          <div class="mkTrust"><span>✓ Kurulum gerektirmez</span><span>✓ Tarayıcıdan erişim</span><span>✓ Kişiye özel çalışma alanı</span></div>
-        </div>
-        <div class="mkPreview">
-          <div class="mkPreviewHead"><b><span class="mkDot"></span>Gerçek sistem iş akışı</b><span class="pill">Canlı Demo</span></div>
-          <div class="mkFlow"><div class="mkStep">1. TASLAK</div><div class="mkStep">2. OLUR LİSTESİ</div><div class="mkStep">3. PDF / SAYI</div><div class="mkStep">4. TESLİM</div></div>
-          <div class="mkMiniGrid"><div class="mkMini"><strong>4</strong><span>Gerçek belge şablonu</span></div><div class="mkMini"><strong>9</strong><span>Ana yönetim bölümü</span></div><div class="mkMini"><strong>3</strong><span>Üstün Başarı dayanak belgesi</span></div><div class="mkMini"><strong>7 gün</strong><span>Ücretsiz demo süresi</span></div></div>
-        </div>
-      </div></section>
-
-      <section id="ozellikler" class="mkSection"><div class="mkSectionTitle"><h3>Programda neler var?</h3><p>Masaüstünde kullanılan gerçek sistemin temel modülleri web ortamına taşınır; demo kullanıcıları temsili ekran değil çalışan özellikleri görür.</p></div>
-        <div class="mkCards">
-          <div class="mkCard"><div class="mkCardIcon">➕</div><h4>Yeni Belge Kaydı</h4><p>Başarı / Üstün Başarı seçimi, personel bilgileri, gerekçe, taltif metni, fotoğraf ve imza yönetimi.</p></div>
-          <div class="mkCard"><div class="mkCardIcon">📊</div><h4>Excel Toplu Aktarım</h4><p>Excel dosyasını önce kontrol eder, hatalı satırları gösterir ve yalnız uygun kayıtları taslak olarak aktarır.</p></div>
-          <div class="mkCard"><div class="mkCardIcon">📋</div><h4>Olur Listeleri</h4><p>Kayıtları ayrı Olur gruplarında tutar; fotoğraf ve zorunlu alan kontrollerini süreç içinde uygular.</p></div>
-          <div class="mkCard"><div class="mkCardIcon">🏅</div><h4>Üstün Başarı Dayanakları</h4><p>Üstün Başarı için üç geçerli Başarı Belgesini ilişkilendirir; geçmiş ve sistem dışı belgeler için kontrollü manuel devam sunar.</p></div>
-          <div class="mkCard"><div class="mkCardIcon">📄</div><h4>Gerçek PDF Üretimi</h4><p>Dikey ve yatay dört belge şablonunu, fotoğrafı, imzayı, tarih-sayı ve Olur yazısı bilgilerini kullanarak PDF oluşturur.</p></div>
-          <div class="mkCard"><div class="mkCardIcon">🗂️</div><h4>Arşiv ve Toplu İşlemler</h4><p>Arama, arşiv, toplu PDF, toplu Olur, teslim, taslağa dönüş, fotoğraf eşleştirme, yedekleme ve dışa aktarım.</p></div>
-        </div>
-      </section>
-
-      <section id="surec" class="mkProcess"><div class="mkSection"><div class="mkSectionTitle"><h3>Belge süreci nasıl ilerler?</h3><p>Resmî tarih ve sayı kayıt oluşturulurken değil, doğru aşamada verilir.</p></div>
-        <div class="mkProcessGrid"><div class="mkProcessItem"><b>01</b><strong>Taslak Oluştur</strong><span>Personel ve belge bilgileri kaydedilir. Resmî tarih/sayı henüz verilmez.</span></div><div class="mkProcessItem"><b>02</b><strong>Olur Listesine Al</strong><span>Zorunlu bilgiler ve fotoğraf kontrol edilir; kayıt kendi Olur grubuna eklenir.</span></div><div class="mkProcessItem"><b>03</b><strong>PDF Hazırla</strong><span>Şablon ve bilgiler doğrulandıktan sonra tarih/sayı atanır ve belge PDF'si üretilir.</span></div><div class="mkProcessItem"><b>04</b><strong>Teslim Et ve Arşivle</strong><span>İmzalanan belge teslim edilmiş duruma alınır ve arşivde izlenmeye devam eder.</span></div></div>
-      </div></section>
-
-      <section id="demo" class="mkSection"><div class="mkDemo"><div><h3>Sistemi kendi hesabınızla deneyin</h3><p>Demo hesabı 7 gün süreyle açılır ve 10 yeni kayıt hakkı verir. Yeni kayıt, fotoğraf, Olur, PDF, toplu işlemler ve diğer temel modüller gerçek olarak çalışır.</p></div><div class="mkDemoSide"><button class="btn" onclick="openAuth('register')">Demoyu Dene</button><button class="btn secondary" onclick="openAuth('login')">Giriş Yap</button></div></div></section>
-
-      <footer class="mkFooter"><div class="mkFooterIn"><span>Kamu Kurumları Başarı Belgeleri Düzenleme ve Takip Sistemi</span><span>Kurumsal süreçler için web tabanlı çözüm</span></div></footer>
-    `;
-  }
-
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',renderMarketing);
-  else renderMarketing();
 })();
 </script>
 
