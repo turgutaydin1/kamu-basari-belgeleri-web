@@ -24,6 +24,13 @@ jobs:
           python-version: '3.12'
       - name: Build deployment files
         run: python tools/build_apps_script_deploy.py
+      - name: Upload ready deployment ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: Kamu_Basari_AppsScript_Hazir
+          path: apps-script-deploy/
+          if-no-files-found: error
+          retention-days: 30
       - name: Commit generated deployment package
         run: |
           git config user.name "github-actions[bot]"
