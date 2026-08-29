@@ -12,3 +12,13 @@ h2,h3,h4{color:var(--navy)}label{display:block;font-weight:700;font-size:13px;ma
 @media(max-width:1120px){.menu{grid-template-columns:repeat(3,1fr)}.stats5,.stats4{grid-template-columns:repeat(2,1fr)}.grid31{grid-template-columns:1fr}.grid3{grid-template-columns:1fr 1fr}}
 @media(max-width:720px){.hero{grid-template-columns:1fr;padding-top:45px}.hero h2{font-size:34px}.grid2,.grid3{grid-template-columns:1fr}.menu{grid-template-columns:repeat(2,1fr)}.stats5,.stats4{grid-template-columns:1fr}.searchItem{grid-template-columns:1fr}}
 </style>
+<script>
+window.addEventListener('load',function(){
+  if(!window.google||!google.script||!google.script.run)return;
+  google.script.run.withSuccessHandler(function(html){
+    var match=String(html||'').match(/<script>([\s\S]*)<\/script>/i);
+    if(!match)return;
+    var s=document.createElement('script');s.text=match[1];document.body.appendChild(s);
+  }).getClientParityContentWeb();
+});
+</script>
