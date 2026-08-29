@@ -1,95 +1,60 @@
-KAMU KURUMLARI BAŞARI BELGELERİ - ÜYELİKLİ TAM WEB SÜRÜMÜ
+KAMU KURUMLARI BAŞARI BELGELERİ - GOOGLE CLOUD + GOOGLE SITES KURULUMU
 
-BU PAKET NE YAPIYOR?
-- Programın tam arayüzü webde çalışır.
-- Kullanıcı e-posta/parola ile üye olur.
-- Yeni kullanıcı otomatik DENEME hesabı alır (varsayılan: 7 gün / 10 yeni kayıt).
-- Her kullanıcının veritabanı, fotoğrafları, imzaları ve ayarları birbirinden ayrıdır.
-- Yönetici; kullanıcıyı Tam Sürüm yapabilir, deneme gününü/kayıt limitini değiştirebilir veya engelleyebilir.
-- Google Sites uygulamanın vitrini olur; asıl uygulama Railway üzerinde çalışır.
+ÖNEMLİ:
+- Railway kullanılmıyor.
+- Yeni bir üçüncü taraf hosting hesabı açılmıyor.
+- Mevcut Google hesabınızla Google Cloud kullanılacak.
+- GitHub'daki dosyalar kalacak; GitHub yalnız kaynak kod deposu olacak.
+- Kullanıcı verileri GitHub'a yazılmayacak.
+- Kullanıcı verileri Google Cloud VM'nin kalıcı diskinde /opt/basari-data altında tutulacak.
+- Tam ayrıntılı anlatım için GOOGLE_CLOUD_KURULUM.md dosyasını açın.
 
-1. GITHUB DEPOSU OLUŞTUR
-1) github.com'a gir.
-2) Sağ üst + > New repository.
-3) Ad: kamu-basari-belgeleri-web
-4) İstersen Private seç.
-5) Create repository.
-6) Bu ZIP'i bilgisayarında aç.
-7) ZIP içindeki DOSYA ve KLASÖRLERİN TAMAMINI GitHub deposunun köküne yükle. ZIP dosyasının kendisini yükleme.
-8) Commit changes de.
+KISA SIRA:
+1) Google Cloud Console'a mevcut Google hesabınla gir.
+2) Yeni proje oluştur: kamu-basari-belgeleri.
+3) VPC Network > IP addresses bölümünden Regional Static IPv4 ayır.
+4) Compute Engine'de Ubuntu 24.04 veya Debian 12 VM oluştur.
+5) External IPv4 olarak ayırdığın sabit IP'yi seç.
+6) Allow HTTP ve Allow HTTPS seçeneklerini işaretle.
+7) VM'de SSH aç.
+8) Şunları çalıştır:
 
-2. RAILWAY'DE YAYINLA
-1) railway.com'a gir ve GitHub hesabınla giriş yap.
-2) New Project seç.
-3) Deploy from GitHub repo seç.
-4) kamu-basari-belgeleri-web deposunu seç.
-5) Railway kökteki Dockerfile'ı görüp otomatik derlemeye başlayacak.
+sudo apt update
+sudo apt install -y docker.io docker-compose-v2 git
+sudo systemctl enable --now docker
+cd /opt
+sudo git clone https://github.com/turgutaydin1/kamu-basari-belgeleri-web.git basari-web
+sudo chown -R $USER:$USER /opt/basari-web
+cd /opt/basari-web
+cp .env.example .env
+nano .env
 
-3. KALICI VERİ DİSKİ EKLE - ZORUNLU
-1) Railway proje ekranında oluşturulan servis kutusuna tıkla.
-2) Volume / Add Volume seç.
-3) Mount Path alanına TAM olarak: /data yaz.
-4) Kaydet.
-ÖNEMLİ: /data volume olmadan kullanıcılar ve kayıtlar yeniden dağıtımda kaybolabilir.
+9) .env içinde şu alanları doldur:
+WEB_ADMIN_EMAIL=kendi e-posta adresin
+WEB_ADMIN_PASSWORD=guclu bir parola
+WEB_TRIAL_DAYS=7
+WEB_TRIAL_RECORD_LIMIT=10
+WEB_SESSION_DAYS=7
+APP_DOMAIN=SABIT_IP_ADRESIN.sslip.io
 
-4. YÖNETİCİ VE DENEME AYARLARINI GİR
-Railway > servis > Variables bölümüne gir ve şunları ekle:
+10) Ardından:
+sudo mkdir -p /opt/basari-data
+sudo chown -R $USER:$USER /opt/basari-data
+docker compose up -d --build
 
-BASARI_WEB_MODE = 1
-WEB_DATA_ROOT = /data
-WEB_ADMIN_EMAIL = kendi e-posta adresin
-WEB_ADMIN_PASSWORD = güçlü bir yönetici parolası
-WEB_TRIAL_DAYS = 7
-WEB_TRIAL_RECORD_LIMIT = 10
-WEB_SESSION_DAYS = 7
+11) Tarayıcıda:
+https://SABIT_IP_ADRESIN.sslip.io
+adresini aç.
 
-Değişkenleri kaydedip Redeploy/Deploy yap.
+12) Yönetici hesabınla giriş yap.
+13) Gizli sekmede yeni deneme üyesi oluştur ve 7 gün / 10 kayıt sınırını dene.
+14) Google Sites > Ekle > Yerleştir (Embed) bölümüne aynı https adresini koy.
+15) Siteyi yayınla.
 
-5. UYGULAMA ADRESİNİ AL
-1) Railway > servis > Settings > Networking bölümüne gir.
-2) Generate Domain seç.
-3) Railway sana https://....up.railway.app benzeri bir adres verir.
-4) Bu adresi yeni sekmede aç.
-5) Giriş Yap / Üye Ol ekranını görmelisin.
-6) WEB_ADMIN_EMAIL ve WEB_ADMIN_PASSWORD değerleriyle giriş yaparsan yönetici hesabına girersin.
+GÜNCELLEME:
+GitHub'a yeni kod geldiğinde VM'de:
+cd /opt/basari-web
+git pull
+docker compose up -d --build
 
-6. DENEME ÜYESİNİ TEST ET
-1) Tarayıcıda gizli sekme aç.
-2) Railway adresine gir.
-3) Üye Ol / Deneme Başlat bölümünden farklı bir e-posta ile hesap aç.
-4) Giriş yap.
-5) Kamu Kurumları Başarı Belgeleri programının TAM arayüzü açılır.
-6) Kullanıcı varsayılan olarak 7 gün / 10 yeni kayıt hakkına sahiptir.
-7) PDF, şablon, kayıt, arama vb. program özellikleri kullanıcıya açıktır; yeni kayıt üretimi deneme limitiyle sınırlandırılır.
-
-7. ÜYEYİ TAM SÜRÜM YAP
-1) Kendi yönetici hesabınla giriş yap.
-2) Sol kenar çubuğunda Üye Yönetimi bölümünü aç.
-3) Kullanıcıyı seç.
-4) Üyelik alanını FULL yap ve Üyeliği Güncelle de.
-5) İstersen TRIAL seçip gün ve kayıt limitini değiştirebilir veya BLOCKED ile engelleyebilirsin.
-
-8. GOOGLE SITES'E YERLEŞTİR
-1) sites.google.com adresinde siteni düzenlemeye aç.
-2) Sağ tarafta Ekle > Yerleştir (Embed) seç.
-3) URL bölümüne Railway adresini yapıştır.
-4) Ekle de.
-5) Oluşan uygulama alanını sayfada mümkün olduğunca geniş ve yüksek yap.
-6) Yayınla.
-7) Yayınlanan Google Sites adresini gizli sekmede aç ve üyelik/giriş/kayıt testini yap.
-
-VERİ GÜVENLİĞİ / AYRIM
-- Her kullanıcı /data/users/<benzersiz-kullanici-id> altında kendi çalışma alanına sahiptir.
-- Kullanıcılar birbirlerinin kayıtlarını, fotoğraflarını ve ayarlarını görmez.
-- Gerçek mevcut kurum veritabanı ve gerçek personel fotoğrafları BU PAKETE KONULMAMIŞTIR.
-- Her kullanıcı kendi kurum, amir, imza ve belge ayarını kendi hesabında yapar.
-
-İLK TESTTE KONTROL EDİLECEKLER
-1) Üye olma
-2) Giriş yapma
-3) 1 adet kayıt oluşturma
-4) PDF üretme
-5) Çıkış / tekrar giriş
-6) Kaydın hâlâ durması
-7) Yönetici hesabından üyeyi FULL yapma
-8) Google Sites içinden dosya yükleme ve PDF indirme
+KULLANICI VERİLERİ KOD GÜNCELLEMESİNDE SİLİNMEZ; /opt/basari-data ALTINDA KALIR.
